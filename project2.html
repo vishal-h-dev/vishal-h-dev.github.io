@@ -5,6 +5,15 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Stock Portfolio Tracker — Vishal Hegde</title>
 
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PFP9SLNDZ5"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-PFP9SLNDZ5');
+  </script>
+
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
@@ -14,6 +23,7 @@
       min-height: 100vh;
     }
   </style>
+  <link rel="stylesheet" href="static/theme.css">
 </head>
 <body class="antialiased selection:bg-white/20">
 
@@ -27,7 +37,7 @@
           <span class="text-sm font-medium sm:text-base group-hover:text-white transition">Vishal Hegde</span>
         </a>
 
-        <nav class="hidden gap-6 text-sm text-neutral-200 md:flex">
+        <nav class="hidden gap-6 text-sm text-neutral-200 md:flex" aria-label="Primary">
           <a href="index.html" class="hover:text-white transition">Home</a>
           <a href="index.html#projects" class="text-white font-medium">Projects</a>
           <a href="index.html#connect" class="hover:text-white transition">Connect</a>
@@ -48,7 +58,7 @@
       <div class="mb-4">
         <span class="rounded-full border border-neutral-700 bg-neutral-900 px-3 py-1 text-xs text-neutral-400">Finance & Data Analytics</span>
       </div>
-      <h1 class="text-3xl font-bold sm:text-5xl mb-4">Stock Portfolio Tracker</h1>
+      <h1 class="gradient-heading text-3xl font-bold sm:text-5xl mb-4">Stock Portfolio Tracker</h1>
       <p class="max-w-3xl text-lg text-neutral-400 leading-relaxed">
         A real-time financial tool powered by Django and yfinance to research equities, track live portfolios, and visualize market data with Plotly.
       </p>
@@ -142,13 +152,23 @@
           </p>
         </section>
 
+        <section id="engineering" class="scroll-mt-32 border-l-2 border-neutral-700 pl-6">
+          <h2 class="text-xl font-semibold mb-2 text-white">Engineering Notes</h2>
+          <ul class="list-disc list-inside space-y-3 text-neutral-300">
+            <li><strong>API rate limits:</strong> yfinance and NewsAPI both throttle frequent calls, so quote and headline data is cached server-side with a short refresh interval instead of hitting the upstream API on every page load — keeping the dashboard responsive without tripping rate limits.</li>
+            <li><strong>Stale-market handling:</strong> When markets are closed, live-price calls can return the previous close or gaps in data; the portfolio view falls back to the last known price rather than showing a blank or erroring out.</li>
+            <li><strong>Currency consistency:</strong> Purchase price, quantity, and timestamp are stored at buy-time, then compared against the live USD→INR converted price for unrealized P&L — keeping the conversion logic in one place avoids drift between what a position cost and what it's currently "worth."</li>
+            <li><strong>Chart performance:</strong> Rendering interactive 1D–MAX Plotly charts per stock page needed care to avoid re-fetching the full price history on every range toggle — ranges are sliced client-side from a single fetched series where possible.</li>
+          </ul>
+        </section>
+
       </div>
 
       <aside class="hidden lg:block lg:col-span-4">
         <div class="sticky top-28 space-y-8">
             <div class="rounded-2xl border border-neutral-800 bg-neutral-900/50 p-6 backdrop-blur-sm">
                 <h3 class="mb-4 text-sm font-semibold uppercase tracking-wider text-neutral-500">Table of Contents</h3>
-                <nav class="space-y-2 text-sm">
+                <nav class="space-y-2 text-sm" aria-label="Table of contents">
                     <a href="#overview" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Overview</a>
                     <a href="#login" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Authentication</a>
                     <a href="#dashboard" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Dashboard</a>
@@ -156,6 +176,7 @@
                     <a href="#portfolio" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Portfolio</a>
                     <a href="#news" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Financial News</a>
                     <a href="#wishlist" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Wishlists</a>
+                    <a href="#engineering" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Engineering Notes</a>
                 </nav>
             </div>
             
