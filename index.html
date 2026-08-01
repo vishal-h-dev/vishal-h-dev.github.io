@@ -21,7 +21,15 @@
       color: #f9fafb;
       min-height: 100vh;
     }
+    .skill-chip {
+      cursor: help;
+      transition: background-color .15s ease;
+    }
+    .skill-chip:hover {
+      background-color: rgba(255,255,255,0.22);
+    }
   </style>
+  <link rel="stylesheet" href="static/theme.css">
 </head>
 <body class="antialiased">
 
@@ -39,7 +47,9 @@
 
         <nav class="hidden gap-6 text-sm text-neutral-200 md:flex">
           <a href="index.html" class="hover:text-white">Home</a>
+          <a href="#skills" class="hover:text-white">Skills</a>
           <a href="#projects" class="hover:text-white">Projects</a>
+          <a href="#experience" class="hover:text-white">Experience</a>
           <a href="#connect" class="hover:text-white">Connect</a>
         </nav>
 
@@ -55,7 +65,7 @@
   <main class="mx-auto max-w-5xl px-4 pt-28 pb-16 text-white">
 
     <section class="mb-16">
-      <h1 class="mb-4 text-4xl font-bold sm:text-5xl">Hi, I'm Vishal Hegde.</h1>
+      <h1 class="gradient-heading mb-4 text-4xl font-bold sm:text-5xl">Hi, I'm Vishal Hegde.</h1>
 
       <p class="mb-6 max-w-3xl leading-relaxed text-neutral-300">
         Software Developer in the making. My expertise lies in Python, Java, and C programming, with a strong focus on DSA and OOPs. I specialize in Web Development using Django/Flask and PostgreSQL/SQL. Equipped with knowledge of Git/GitHub, Linux, and core CS concepts like Operating Systems and Computer Networks, I'm driven to build efficient and scalable applications.
@@ -73,6 +83,14 @@
         <a href="static/Resume.pdf" download
            class="rounded-lg border border-neutral-700 px-4 py-2 hover:bg-white/10">
           Resume (PDF)
+        </a>
+        <a href="https://github.com/mrnobody075" target="_blank" rel="noopener"
+           class="inline-flex items-center gap-2 rounded-lg border border-neutral-700 px-4 py-2 hover:bg-white/10">
+          <svg viewBox="0 0 24 24" aria-hidden="true" class="h-4 w-4">
+            <path fill="currentColor"
+                  d="M12 .5C5.7.5.9 5.3.9 11.6c0 4.9 3.2 9 7.6 10.4.6.1.8-.3.8-.6v-2c-3.1.7-3.7-1.5-3.7-1.5-.5-1.3-1.2-1.6-1.2-1.6-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 .1.6 2.6 3.3 1.9.1-.7.4-1.2.7-1.5-2.5-.3-5-1.3-5-5.4 0-1.2.4-2.1 1.1-2.9-.1-.3-.5-1.4.1-2.9 0 0 .9-.3 2.9 1.1a9.7 9.7 0 0 1 5.3 0c2-1.4 2.9-1.1 2.9-1.1.6 1.5.2 2.6.1 2.9.7.8 1.1 1.7 1.1 2.9 0 4.1-2.5 5.1-5 5.4.4.3.7 1 .7 2.1v3.1c0 .3.2.7.8.6 4.4-1.4 7.6-5.5 7.6-10.4C23.1 5.3 18.3.5 12 .5z" />
+          </svg>
+          <span>GitHub</span>
         </a>
       </div>
     </section>
@@ -96,51 +114,77 @@
         </ul>
       </div>
 
-      <div class="rounded-2xl border border-neutral-800 bg-neutral-900 px-6 py-6">
+      <div class="rounded-2xl border border-neutral-800 bg-neutral-900 px-6 py-6" id="skills">
         <h2 class="mb-4 flex items-center gap-2 text-xl font-semibold">
-          Core Skills <span>🛠️</span>
+          Core Skills
         </h2>
+        <p class="mb-4 text-xs text-neutral-500">Hover any skill for a quick description.</p>
 
         <h3 class="mb-2 text-xs font-semibold tracking-wide text-neutral-400">
           LANGUAGES
         </h3>
         <div class="mb-4 flex flex-wrap gap-2 text-xs">
-          <span class="rounded-lg bg-white/10 px-3 py-1">Python</span>
-          <span class="rounded-lg bg-white/10 px-3 py-1">Java</span>
-          <span class="rounded-lg bg-white/10 px-3 py-1">C</span>
-          <span class="rounded-lg bg-white/10 px-3 py-1">SQL</span>
-          <span class="rounded-lg bg-white/10 px-3 py-1">HTML/CSS</span>
-          <span class="rounded-lg bg-white/10 px-3 py-1">Bash</span>
+          <span class="skill-chip rounded-lg bg-white/10 px-3 py-1" data-tooltip="Primary language across backend services, data engineering, tooling, and systems projects.">Python</span>
+          <span class="skill-chip rounded-lg bg-white/10 px-3 py-1" data-tooltip="Object-oriented development, DSA, and JVM-based application experience.">Java</span>
+          <span class="skill-chip rounded-lg bg-white/10 px-3 py-1" data-tooltip="Low-level programming, memory management, and systems fundamentals.">C</span>
+          <span class="skill-chip rounded-lg bg-white/10 px-3 py-1" data-tooltip="Relational query writing, schema design, indexing, and query tuning.">SQL</span>
+          <span class="skill-chip rounded-lg bg-white/10 px-3 py-1" data-tooltip="Front-end structure and styling, including responsive/Tailwind-based UIs.">HTML/CSS</span>
+          <span class="skill-chip rounded-lg bg-white/10 px-3 py-1" data-tooltip="Shell scripting for automation, deployment startup scripts, and Linux workflows.">Bash</span>
         </div>
 
         <h3 class="mb-2 text-xs font-semibold tracking-wide text-neutral-400">
           FRAMEWORKS &amp; DATABASES
         </h3>
         <div class="mb-4 flex flex-wrap gap-2 text-xs">
-          <span class="rounded-lg bg-white/10 px-3 py-1">Django</span>
-          <span class="rounded-lg bg-white/10 px-3 py-1">Flask</span>
-          <span class="rounded-lg bg-white/10 px-3 py-1">PostgreSQL/SQLite </span>
+          <span class="skill-chip rounded-lg bg-white/10 px-3 py-1" data-tooltip="Full-stack web framework used for building secure, multi-app platforms and admin dashboards.">Django</span>
+          <span class="skill-chip rounded-lg bg-white/10 px-3 py-1" data-tooltip="Lightweight Python web framework for APIs and smaller services.">Flask</span>
+          <span class="skill-chip rounded-lg bg-white/10 px-3 py-1" data-tooltip="Relational database design, migrations, and query optimization; embedded SQLite for lightweight storage.">PostgreSQL/SQLite</span>
+          <span class="skill-chip rounded-lg bg-white/10 px-3 py-1" data-tooltip="PostgreSQL extension for storing and querying vector embeddings — used to power semantic/similarity search in AI applications.">PostgreSQL + pgvector</span>
+          <span class="skill-chip rounded-lg bg-white/10 px-3 py-1" data-tooltip="Designing and exposing HTTP APIs (resource modeling, auth, versioning) consumed by front-ends and other services.">REST APIs</span>
+        </div>
+
+        <h3 class="mb-2 text-xs font-semibold tracking-wide text-neutral-400">
+          AI / LLM ENGINEERING
+        </h3>
+        <div class="mb-4 flex flex-wrap gap-2 text-xs">
+          <span class="skill-chip rounded-lg bg-white/10 px-3 py-1" data-tooltip="Retrieval-Augmented Generation: grounding LLM responses in retrieved documents/data instead of relying on model memory alone.">RAG</span>
+          <span class="skill-chip rounded-lg bg-white/10 px-3 py-1" data-tooltip="Designing end-to-end retrieval pipelines: chunking, embedding, indexing, retrieval, ranking, and prompt assembly.">RAG Pipeline Design</span>
+          <span class="skill-chip rounded-lg bg-white/10 px-3 py-1" data-tooltip="Combining semantic (vector) search with traditional keyword search and measuring/optimizing end-to-end response latency.">Hybrid Search + Chat Completion Timing</span>
+          <span class="skill-chip rounded-lg bg-white/10 px-3 py-1" data-tooltip="Building and evaluating LLM-powered features: prompt design, grounding, and automated accuracy/quality checks.">LLM/RAG Engineering</span>
+          <span class="skill-chip rounded-lg bg-white/10 px-3 py-1" data-tooltip="Extract, Transform, Load: building data pipelines that clean, normalize, and prepare data for downstream systems and AI models.">ETL</span>
+        </div>
+
+        <h3 class="mb-2 text-xs font-semibold tracking-wide text-neutral-400">
+          CLOUD &amp; IDENTITY
+        </h3>
+        <div class="mb-4 flex flex-wrap gap-2 text-xs">
+          <span class="skill-chip rounded-lg bg-white/10 px-3 py-1" data-tooltip="Deploying and configuring Python web apps (Gunicorn/WSGI) on Azure's managed application hosting service.">Azure App Service</span>
+          <span class="skill-chip rounded-lg bg-white/10 px-3 py-1" data-tooltip="Enterprise single sign-on using Microsoft's identity platform, including token validation and tenant checks.">MSAL / Entra ID SSO</span>
+          <span class="skill-chip rounded-lg bg-white/10 px-3 py-1" data-tooltip="Decoding and validating JSON Web Tokens for authenticated API/session flows.">PyJWT</span>
+          <span class="skill-chip rounded-lg bg-white/10 px-3 py-1" data-tooltip="Python SDK for authenticating against Azure AD/Entra ID across multiple app registrations and redirect URIs.">azure-identity</span>
+          <span class="skill-chip rounded-lg bg-white/10 px-3 py-1" data-tooltip="Coordinating SSO login across multiple app registrations and redirect URIs for a multi-app platform.">Multi-App SSO Integration</span>
         </div>
 
         <h3 class="mb-2 text-xs font-semibold tracking-wide text-neutral-400">
           CONCEPTS &amp; TOOLS
         </h3>
         <div class="flex flex-wrap gap-2 text-xs">
-          <span class="rounded-lg bg-white/10 px-3 py-1">DSA</span>
-          <span class="rounded-lg bg-white/10 px-3 py-1">OOPs</span>
-          <span class="rounded-lg bg-white/10 px-3 py-1">Computer Network</span>
-          <span class="rounded-lg bg-white/10 px-3 py-1">Object Oriented Design</span>
-          <span class="rounded-lg bg-white/10 px-3 py-1">Git/GitHub</span>
-          <span class="rounded-lg bg-white/10 px-3 py-1">Linux</span>
-          <span class="rounded-lg bg-white/10 px-3 py-1">Docker</span>
-          <span class="rounded-lg bg-white/10 px-3 py-1">Render</span>
-          <span class="rounded-lg bg-white/10 px-3 py-1">AWS(EC2, IAM, S3)</span>
+          <span class="skill-chip rounded-lg bg-white/10 px-3 py-1" data-tooltip="Algorithmic problem solving: arrays, trees, graphs, hashing, and complexity analysis.">DSA</span>
+          <span class="skill-chip rounded-lg bg-white/10 px-3 py-1" data-tooltip="Encapsulation, inheritance, polymorphism, and clean class-based design.">OOPs</span>
+          <span class="skill-chip rounded-lg bg-white/10 px-3 py-1" data-tooltip="TCP/IP fundamentals, sockets, and distributed-systems networking (used in building a Raft-based cluster).">Computer Network</span>
+          <span class="skill-chip rounded-lg bg-white/10 px-3 py-1" data-tooltip="Designing maintainable, testable software architectures and module boundaries.">Object Oriented Design</span>
+          <span class="skill-chip rounded-lg bg-white/10 px-3 py-1" data-tooltip="Version control workflows: branching, PRs, and collaborative development.">Git/GitHub</span>
+          <span class="skill-chip rounded-lg bg-white/10 px-3 py-1" data-tooltip="Command-line proficiency, process management, and day-to-day development on Linux systems.">Linux</span>
+          <span class="skill-chip rounded-lg bg-white/10 px-3 py-1" data-tooltip="Containerizing applications for consistent, portable deployments.">Docker</span>
+          <span class="skill-chip rounded-lg bg-white/10 px-3 py-1" data-tooltip="Cloud deployment platform used for hosting live demo applications.">Render</span>
+          <span class="skill-chip rounded-lg bg-white/10 px-3 py-1" data-tooltip="Compute, identity, and storage services used for cloud-hosted applications.">AWS(EC2, IAM, S3)</span>
         </div>
         <h3 class="mb-2 text-xs font-semibold tracking-wide text-neutral-400">
           PUBLICATIONS
         </h3>
         <div class="mb-4 flex flex-wrap gap-2 text-xs">
-         <a style="color:#1a73e8; text-decoration: underline;" href="https://ieeexplore.ieee.org/document/11280292">Workforce Efficiency in Factories: Computer Vision Approach</a>
+         <a class="text-teal-300 underline hover:text-white transition" href="https://ieeexplore.ieee.org/document/11280292">Workforce Efficiency in Factories: Computer Vision Approach</a>
+         <a class="text-teal-300 underline hover:text-white transition" href="https://ieeexplore.ieee.org/document/11481888">AI-Driven Workforce Monitoring and Safety Compliance in Factories Using Computer Vision and the Django Framework</a>
         </div>
         <h3 class="mb-2 text-xs font-semibold tracking-wide text-neutral-400">
           DEPLOYMENT
@@ -158,7 +202,7 @@
 
       <div class="space-y-8">
         <a
-          href="project1.html"
+          href="project1updated.html"
           class="block rounded-xl bg-neutral-900 border border-neutral-800 p-6 hover:bg-neutral-800 transition"
         >
           <p class="text-xs text-neutral-400 mb-2">2024 — Computer Vision</p>
@@ -198,7 +242,90 @@
             admin controls, and responsive UX.
           </p>
         </a>
+
+        <a
+          href="sentinel.html"
+          class="block rounded-xl bg-neutral-900 border border-neutral-800 p-6 hover:bg-neutral-800 transition"
+        >
+          <p class="text-xs text-neutral-400 mb-2">2026 — Application Security</p>
+          <h3 class="text-lg font-semibold mb-3">
+            Sentinel — Static Security Scanner for Python/Django &amp; AI Apps
+          </h3>
+          <p class="text-sm text-neutral-300 leading-relaxed">
+            A self-contained AST-based static analysis engine that detects injection sinks, hardcoded
+            secrets, insecure Django settings, and AI/LLM-specific risks like prompt injection and
+            agent SSRF — with an interprocedural taint-tracking engine, all pure standard library.
+          </p>
+        </a>
+
+        <a
+          href="ark.html"
+          class="block rounded-xl bg-neutral-900 border border-neutral-800 p-6 hover:bg-neutral-800 transition"
+        >
+          <p class="text-xs text-neutral-400 mb-2">2026 — Systems / Storage Engineering</p>
+          <h3 class="text-lg font-semibold mb-3">
+            Ark — Deduplicating Snapshot-Based Backup Engine
+          </h3>
+          <p class="text-sm text-neutral-300 leading-relaxed">
+            A restic/borg-style backup tool built from scratch: content-defined chunking (FastCDC),
+            BLAKE2b-addressed deduplication, immutable snapshots, integrity verification, garbage
+            collection, and optional AES-256-GCM encryption — pure Python standard library.
+          </p>
+        </a>
+
+        <a
+          href="btreedb.html"
+          class="block rounded-xl bg-neutral-900 border border-neutral-800 p-6 hover:bg-neutral-800 transition"
+        >
+          <p class="text-xs text-neutral-400 mb-2">2026 — Database Internals</p>
+          <h3 class="text-lg font-semibold mb-3">
+            BTreeDB — Disk-Based B+-Tree Key/Value Database
+          </h3>
+          <p class="text-sm text-neutral-300 leading-relaxed">
+            A dependency-free database engine implementing paged binary storage, B+-tree splitting/
+            merging, a write-ahead log with crash recovery, an LRU buffer pool, secondary indexes, a
+            minimal SQL subset, and a Tkinter desktop "Workbench" GUI.
+          </p>
+        </a>
+
+        <a
+          href="raftkv.html"
+          class="block rounded-xl bg-neutral-900 border border-neutral-800 p-6 hover:bg-neutral-800 transition"
+        >
+          <p class="text-xs text-neutral-400 mb-2">2026 — Distributed Systems</p>
+          <h3 class="text-lg font-semibold mb-3">
+            RaftKV — Distributed Key/Value Store on Raft Consensus
+          </h3>
+          <p class="text-sm text-neutral-300 leading-relaxed">
+            A replicated key/value store built on a from-scratch Raft consensus implementation:
+            leader election, log replication, crash-safe persistence, and network-partition safety —
+            validated with a deterministic, seeded network simulator plus a real TCP cluster mode.
+          </p>
+        </a>
       </div>
+    </section>
+
+    <section id="experience" class="mb-20">
+      <div class="mb-8 flex items-center justify-between">
+        <h2 class="text-3xl font-bold text-white">Experience</h2>
+      </div>
+
+      <a
+        href="internship.html"
+        class="block rounded-xl bg-neutral-900 border border-neutral-800 p-6 hover:bg-neutral-800 transition"
+      >
+        <p class="text-xs text-neutral-400 mb-2">Backend &amp; AI Engineering Intern — Volvo Construction Equipment</p>
+        <h3 class="text-lg font-semibold mb-3">
+          Enterprise AI Marketplace &amp; Internal AI Platform Engineering
+        </h3>
+        <p class="text-sm text-neutral-300 leading-relaxed">
+          Contributed to a centralized enterprise AI platform hosting multiple AI-powered business
+          applications under one secure portal, plus a monitoring dashboard and natural-language
+          diagnostic/knowledge assistants built on hybrid (semantic + keyword) search. Worked with
+          Django, PostgreSQL, Azure App Service, Microsoft Entra ID (MSAL/SSO), and RAG pipelines.
+        </p>
+        <span class="mt-4 inline-block text-xs font-semibold text-blue-400">Read the full write-up →</span>
+      </a>
     </section>
 
     <section id="connect" class="mb-20 flex flex-col items-center text-center">
@@ -234,24 +361,30 @@
       >
         <input
           type="text"
+          id="name"
           name="name"
           placeholder="Your Name"
+          aria-label="Your Name"
           required
           class="w-full rounded-md border border-neutral-700 bg-neutral-900 px-4 py-3 text-neutral-100 placeholder-neutral-500 outline-none focus:border-neutral-400"
         />
 
         <input
           type="email"
+          id="email"
           name="email"
           placeholder="Your Email"
+          aria-label="Your Email"
           required
           class="w-full rounded-md border border-neutral-700 bg-neutral-900 px-4 py-3 text-neutral-100 placeholder-neutral-500 outline-none focus:border-neutral-400"
         />
 
         <textarea
+          id="message"
           name="message"
           rows="5"
           placeholder="Your Message"
+          aria-label="Your Message"
           required
           class="w-full rounded-md border border-neutral-700 bg-neutral-900 px-4 py-3 text-neutral-100 placeholder-neutral-500 outline-none focus:border-neutral-400"
         ></textarea>
@@ -268,7 +401,10 @@
   </main>
 
 <div style="text-align:center; margin-top:20px;">
-  <img src="https://komarev.com/ghpvc/?username=mrnobody075&style=for-the-badge"/>
+  <a href="https://hits.seeyoufarm.com" target="_blank" rel="noopener">
+    <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fvishal-h-dev.github.io%2F&count_bg=%235EEAD4&title_bg=%23303030&icon=&icon_color=%23E7E7E7&title=page+views&edge_flat=false"
+         alt="Page view counter for vishal-h-dev.github.io"/>
+  </a>
 </div>
   <footer class="border-t border-neutral-900 bg-black py-6 text-sm text-neutral-400">
     <div class="mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 px-4 md:flex-row">
