@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>RaftKV — Distributed KV Store on Raft — Vishal Hegde</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PFP9SLNDZ5"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-PFP9SLNDZ5');
+  </script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body {
+      background: #000;
+      color: #f9fafb;
+      min-height: 100vh;
+    }
+  </style>
+  <link rel="stylesheet" href="static/theme.css">
+</head>
+<body class="antialiased selection:bg-white/20">
+
+  <header class="fixed top-0 inset-x-0 z-50">
+    <div class="mx-auto max-w-5xl px-4">
+      <div class="mt-3 mb-2 flex items-center justify-between rounded-2xl border border-white/10 bg-black/50 px-4 py-3 backdrop-blur-md">
+        <a href="index.html" class="flex items-center gap-2 group">
+          <div class="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-sm font-semibold group-hover:bg-white/20 transition">
+            VH
+          </div>
+          <span class="text-sm font-medium sm:text-base group-hover:text-white transition">Vishal Hegde</span>
+        </a>
+
+        <nav class="hidden gap-6 text-sm text-neutral-200 md:flex" aria-label="Primary">
+          <a href="index.html" class="hover:text-white transition">Home</a>
+          <a href="index.html#skills" class="hover:text-white transition">Skills</a>
+          <a href="index.html#projects" class="text-white font-medium">Projects</a>
+          <a href="index.html#experience" class="hover:text-white transition">Experience</a>
+          <a href="index.html#connect" class="hover:text-white transition">Connect</a>
+        </nav>
+
+        <button class="md:hidden p-1 text-neutral-200" aria-label="Menu">
+          <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M4 12h16M4 17h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-6xl px-4 pt-32 pb-16 text-white">
+
+    <section class="mb-12 border-b border-neutral-800 pb-8">
+      <div class="mb-4">
+        <span class="rounded-full border border-neutral-700 bg-neutral-900 px-3 py-1 text-xs text-neutral-400">Distributed Systems</span>
+      </div>
+      <h1 class="gradient-heading text-3xl font-bold sm:text-5xl mb-4">RaftKV — Distributed Key/Value Store on Raft Consensus</h1>
+      <p class="max-w-3xl text-lg text-neutral-400 leading-relaxed">
+        A replicated key/value store built on a from-scratch implementation of the Raft consensus
+        algorithm (Ongaro &amp; Ousterhout) — the same protocol behind etcd, Consul, and CockroachDB's
+        metadata layer. Pure Python standard library, zero dependencies.
+      </p>
+
+      <div class="mt-6 flex flex-wrap gap-2 text-xs text-neutral-300">
+        <span class="rounded bg-neutral-800 px-2 py-1">Python (stdlib)</span>
+        <span class="rounded bg-neutral-800 px-2 py-1">Raft Consensus</span>
+        <span class="rounded bg-neutral-800 px-2 py-1">Leader Election</span>
+        <span class="rounded bg-neutral-800 px-2 py-1">Log Replication</span>
+        <span class="rounded bg-neutral-800 px-2 py-1">TCP Networking</span>
+        <span class="rounded bg-neutral-800 px-2 py-1">Deterministic Simulator</span>
+        <span class="rounded bg-neutral-800 px-2 py-1">23 Tests</span>
+      </div>
+    </section>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+
+      <div class="lg:col-span-8 space-y-16">
+
+        <section id="overview" class="scroll-mt-32">
+          <h2 class="text-2xl font-semibold mb-4 text-white">Overview</h2>
+          <p class="text-neutral-300 leading-relaxed">
+            RaftKV is more than "a dict with an HTTP API." It implements the full Raft protocol —
+            leader election, log replication, and safety under leadership change — as a pure
+            algorithm module with no I/O, wired up to a real TCP transport and CLI for actually
+            running a multi-node cluster.
+          </p>
+        </section>
+
+        <section id="raft" class="scroll-mt-32">
+          <h2 class="text-2xl font-semibold mb-4 text-white">Consensus Guarantees</h2>
+          <div class="overflow-x-auto rounded-xl border border-neutral-800">
+            <table class="w-full text-left text-sm">
+              <thead class="bg-neutral-900 text-neutral-400">
+                <tr>
+                  <th class="px-4 py-2">Capability</th>
+                  <th class="px-4 py-2">How</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-neutral-800 text-neutral-300">
+                <tr><td class="px-4 py-2 font-medium">Leader election</td><td class="px-4 py-2">Randomized election timeouts + majority vote — exactly one leader per term, even under message loss.</td></tr>
+                <tr><td class="px-4 py-2 font-medium">Log replication</td><td class="px-4 py-2">The leader replicates every command to a majority of nodes, in order, before it's considered committed.</td></tr>
+                <tr><td class="px-4 py-2 font-medium">Crash recovery</td><td class="px-4 py-2"><code>currentTerm</code>, <code>votedFor</code>, and the log are fsync'd after every change — a restarted node never forgets a vote or contradicts an accepted entry.</td></tr>
+                <tr><td class="px-4 py-2 font-medium">Safety under leadership change</td><td class="px-4 py-2">Only log entries from the current leader's term are committed directly — stale entries from a partitioned-away leader are always safely overwritten.</td></tr>
+                <tr><td class="px-4 py-2 font-medium">Partition tolerance</td><td class="px-4 py-2">A minority partition can never elect a leader or commit anything; once healed, it catches up automatically.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="flow" class="scroll-mt-32">
+          <h2 class="text-2xl font-semibold mb-4 text-white">Request Flow</h2>
+          <div class="rounded-xl border border-neutral-800 bg-neutral-900 p-4 overflow-x-auto">
+<pre class="text-xs text-neutral-300 leading-relaxed"><code>client ──put/get/delete──►any node ──(redirect if not leader)──►leader
+                                            │
+                                 leader appends to its own log
+                                            │
+                      AppendEntries RPC ────┼──── AppendEntries RPC
+                             ▼                             ▼
+                         follower                      follower
+                    (persists + acks)             (persists + acks)
+                                            │
+                      once a majority has persisted it,
+                      the leader marks it committed and
+                    applies it to its key/value state machine
+                                            │
+                    followers learn the new commit index on the
+                      next heartbeat and apply it too</code></pre>
+          </div>
+          <div class="overflow-x-auto rounded-xl border border-neutral-800 mt-4">
+            <table class="w-full text-left text-sm">
+              <thead class="bg-neutral-900 text-neutral-400">
+                <tr><th class="px-4 py-2">Module</th><th class="px-4 py-2">Responsibility</th></tr>
+              </thead>
+              <tbody class="divide-y divide-neutral-800 text-neutral-300">
+                <tr><td class="px-4 py-2 font-mono text-xs">core.py</td><td class="px-4 py-2">The pure algorithm — given an RPC, a clock tick, or a client command, decides what to do and returns messages to send. No I/O of any kind.</td></tr>
+                <tr><td class="px-4 py-2 font-mono text-xs">storage.py</td><td class="px-4 py-2">Persists the log and (currentTerm, votedFor) with fsync-on-write, torn-write-detection discipline.</td></tr>
+                <tr><td class="px-4 py-2 font-mono text-xs">simulator.py</td><td class="px-4 py-2">Deterministic, seeded fake network + fake clock used by the entire test suite — no real sockets, no timing-based flakiness.</td></tr>
+                <tr><td class="px-4 py-2 font-mono text-xs">statemachine.py</td><td class="px-4 py-2">The replicated key/value store + command encoding.</td></tr>
+                <tr><td class="px-4 py-2 font-mono text-xs">network.py / server.py / client.py</td><td class="px-4 py-2">Real TCP transport, per-node service, and client library used by the CLI to run an actual multi-process cluster.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="commands" class="scroll-mt-32">
+          <h2 class="text-2xl font-semibold mb-4 text-white">Command Reference</h2>
+          <div class="overflow-x-auto rounded-xl border border-neutral-800">
+            <table class="w-full text-left text-sm">
+              <thead class="bg-neutral-900 text-neutral-400">
+                <tr><th class="px-4 py-2">Command</th><th class="px-4 py-2">Purpose</th></tr>
+              </thead>
+              <tbody class="divide-y divide-neutral-800 text-neutral-300">
+                <tr><td class="px-4 py-2 font-mono text-xs">serve NODE_ID</td><td class="px-4 py-2">Run one cluster node (<code>--cluster</code>, <code>--data-dir</code>, <code>--tick-interval</code>).</td></tr>
+                <tr><td class="px-4 py-2 font-mono text-xs">put KEY VALUE</td><td class="px-4 py-2">Replicate a write across the cluster.</td></tr>
+                <tr><td class="px-4 py-2 font-mono text-xs">get KEY</td><td class="px-4 py-2">Read a key from the local state machine of whichever node answers.</td></tr>
+                <tr><td class="px-4 py-2 font-mono text-xs">delete KEY</td><td class="px-4 py-2">Replicate a delete across the cluster.</td></tr>
+                <tr><td class="px-4 py-2 font-mono text-xs">status [NODE_ID]</td><td class="px-4 py-2">Show one node's (or every node's) role/term/commit-index.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="testing" class="scroll-mt-32">
+          <h2 class="text-2xl font-semibold mb-4 text-white">Deterministic Testing</h2>
+          <p class="text-neutral-300 leading-relaxed">
+            The algorithm itself never touches a socket, thread, or real clock. A seeded, in-process
+            network simulator drives ticks and message delivery explicitly, so consensus edge cases —
+            split votes, partitions, slow followers — are 100% reproducible and never flaky. The same
+            simulator powers the election, replication, and safety test suites end to end.
+          </p>
+        </section>
+
+        <section id="cluster" class="scroll-mt-32">
+          <h2 class="text-2xl font-semibold mb-4 text-white">Running a Real Cluster</h2>
+          <p class="text-neutral-300 leading-relaxed mb-4">
+            A separate real-network layer (TCP transport, per-node service, leader-redirecting
+            client, CLI) lets the same core engine run as an actual multi-process cluster.
+          </p>
+          <div class="rounded-xl border border-neutral-800 bg-neutral-900 p-4 overflow-x-auto">
+<pre class="text-xs text-neutral-300 leading-relaxed"><code>raftkv serve n1 --cluster cluster.json --data-dir ./data
+raftkv serve n2 --cluster cluster.json --data-dir ./data
+raftkv serve n3 --cluster cluster.json --data-dir ./data
+
+raftkv put --cluster cluster.json foo bar
+raftkv get --cluster cluster.json foo          # -> bar
+raftkv status --cluster cluster.json           # role/term/commit-index of every node</code></pre>
+          </div>
+          <p class="mt-4 text-sm text-neutral-400">
+            The client automatically finds the leader and follows redirect hints, so it doesn't
+            matter which node a command is sent to. Verified manually: a 3-node cluster on
+            <code>127.0.0.1:910{1,2,3}</code> elects a leader, replicates put/delete, and all nodes
+            converge on the same commit index.
+          </p>
+        </section>
+
+        <section id="limitations" class="scroll-mt-32 border-l-2 border-neutral-700 pl-6">
+          <h2 class="text-xl font-semibold mb-2 text-white">Honest Limitations</h2>
+          <ul class="list-disc list-inside space-y-2 text-neutral-300">
+            <li><strong>No log compaction / snapshotting</strong> — the log grows forever; this project intentionally keeps the log-only model to stay focused on the consensus algorithm itself.</li>
+            <li><strong>No dynamic membership changes</strong> — cluster topology is a static, fixed set of nodes decided at startup.</li>
+            <li><strong>One TCP connection per message</strong> — simple and correct, but not tuned for very high message rates.</li>
+            <li><strong>No TLS / authentication</strong> — fine for local/demo use, not for an untrusted network.</li>
+            <li><strong>Reads aren't linearized</strong> — a <code>get</code> is served from whichever node answers without a read-index/lease check, so it can return slightly stale data from a partitioned-away former leader or lagging follower. Writes are always linearizable through the log.</li>
+          </ul>
+        </section>
+
+      </div>
+
+      <aside class="hidden lg:block lg:col-span-4">
+        <div class="sticky top-28 space-y-8">
+            <div class="rounded-2xl border border-neutral-800 bg-neutral-900/50 p-6 backdrop-blur-sm">
+                <h3 class="mb-4 text-sm font-semibold uppercase tracking-wider text-neutral-500">Table of Contents</h3>
+                <nav class="space-y-2 text-sm" aria-label="Table of contents">
+                    <a href="#overview" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Overview</a>
+                    <a href="#raft" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Consensus Guarantees</a>
+                    <a href="#flow" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Request Flow</a>
+                    <a href="#commands" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Command Reference</a>
+                    <a href="#testing" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Deterministic Testing</a>
+                    <a href="#cluster" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Running a Real Cluster</a>
+                    <a href="#limitations" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Honest Limitations</a>
+                </nav>
+            </div>
+
+            <div class="rounded-2xl border border-neutral-800 bg-neutral-900/50 p-6">
+                <h3 class="mb-2 text-sm font-semibold text-white">Interested in this project?</h3>
+                <p class="mb-4 text-xs text-neutral-400">Check out the code on GitHub or contact me for a walkthrough.</p>
+                <a href="https://github.com/vishal-h-dev" class="block w-full rounded-lg bg-white px-4 py-2 text-center text-sm font-bold text-black hover:bg-neutral-200 transition">
+                    View on GitHub
+                </a>
+            </div>
+        </div>
+      </aside>
+
+    </div>
+
+  </main>
+
+  <footer class="border-t border-neutral-900 bg-black py-8 text-sm text-neutral-500">
+    <div class="mx-auto max-w-5xl px-4 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="text-center md:text-left">
+        <p>© <span id="year"></span> Vishal Hegde. All rights reserved.</p>
+      </div>
+      <div class="flex gap-4">
+        <a href="index.html" class="hover:text-white transition">Home</a>
+        <a href="index.html#projects" class="hover:text-white transition">Projects</a>
+        <a href="mailto:hegdevishals75@gmail.com" class="hover:text-white transition">Contact</a>
+      </div>
+    </div>
+    <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+  </footer>
+
+</body>
+</html>
