@@ -1,0 +1,365 @@
+/* ==========================================================================
+   Site-wide visual refresh — layered on top of the Tailwind CDN utilities.
+   Loaded after the per-page inline <style> block, so these rules win the
+   cascade without needing !important everywhere. Intentionally CSS-only:
+   no animation libraries, no JS, no build step.
+   ========================================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
+:root {
+  --bg-0: #060608;
+  --bg-1: #101018;
+  --accent: #5eead4;      /* teal — links, highlights, active states */
+  --accent-2: #38bdf8;    /* sky — secondary gradient stop */
+  --accent-3: #f472b6;    /* pink — energetic third accent for variety */
+  --accent-4: #fbbf24;    /* amber — energetic fourth accent for variety */
+  --line: #22273a;
+}
+
+/* ---- base ---- */
+
+body {
+  font-family: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  position: relative;
+  background:
+    radial-gradient(ellipse 80% 55% at 15% -10%, rgba(94, 234, 212, 0.10), transparent 60%),
+    radial-gradient(ellipse 70% 50% at 100% 0%, rgba(56, 189, 248, 0.08), transparent 60%),
+    radial-gradient(ellipse 60% 45% at 90% 90%, rgba(244, 114, 182, 0.06), transparent 60%),
+    var(--bg-0);
+  background-attachment: fixed;
+  color: #f2f2f5;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* floating glow orbs behind content for an energetic, less-flat backdrop */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  z-index: -1;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+  opacity: 0.55;
+}
+
+body::before {
+  top: -12%;
+  left: -8%;
+  width: 42vw;
+  height: 42vw;
+  background: radial-gradient(circle, rgba(94, 234, 212, 0.20), transparent 70%);
+  animation: orb-float-a 22s ease-in-out infinite alternate;
+}
+
+body::after {
+  bottom: -15%;
+  right: -10%;
+  width: 46vw;
+  height: 46vw;
+  background: radial-gradient(circle, rgba(244, 114, 182, 0.14), transparent 70%);
+  animation: orb-float-b 26s ease-in-out infinite alternate;
+}
+
+@keyframes orb-float-a {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(4vw, 6vh) scale(1.12); }
+}
+
+@keyframes orb-float-b {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(-5vw, -4vh) scale(1.08); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before, body::after { animation: none; }
+}
+
+::selection {
+  background: rgba(94, 234, 212, 0.28);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--bg-0); }
+::-webkit-scrollbar-thumb { background: #23232f; border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: #33334a; }
+
+code {
+  color: #b8f5e8;
+  background: rgba(94, 234, 212, 0.08);
+  padding: 0.1em 0.4em;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+/* ---- hero heading treatment ---- */
+
+.gradient-heading {
+  background: linear-gradient(120deg, #ffffff 10%, var(--accent) 45%, var(--accent-2) 70%, var(--accent-3) 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: heading-shine 6s ease-in-out infinite alternate;
+}
+
+@keyframes heading-shine {
+  from { background-position: 0% 50%; }
+  to   { background-position: 100% 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gradient-heading { animation: none; }
+}
+
+/* ---- section headings get a small accent tick ---- */
+
+main h2 {
+  position: relative;
+  padding-left: 16px;
+}
+
+main h2::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.2em;
+  bottom: 0.2em;
+  width: 3px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--accent), var(--accent-2), var(--accent-3));
+}
+
+/* ---- header / nav energy ---- */
+
+header .rounded-full.bg-white\/10 {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2)) !important;
+  color: #06110f !important;
+  font-weight: 700;
+  box-shadow: 0 0 0 1px rgba(94, 234, 212, 0.35), 0 8px 20px -10px rgba(94, 234, 212, 0.6);
+}
+
+header nav a {
+  position: relative;
+  padding-bottom: 2px;
+}
+
+header nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: -2px;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  transition: right 0.2s ease;
+}
+
+header nav a:hover::after {
+  right: 0;
+}
+
+/* ---- custom, readable tooltips (replaces tiny native title tooltips) ---- */
+
+[data-tooltip] {
+  position: relative;
+}
+
+[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  width: max-content;
+  max-width: min(280px, 70vw);
+  background: #16161f;
+  color: #f5f5f7;
+  border: 1px solid rgba(94, 234, 212, 0.4);
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  font-weight: 400;
+  white-space: normal;
+  text-align: left;
+  box-shadow: 0 18px 40px -12px rgba(0, 0, 0, 0.65);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  z-index: 60;
+}
+
+[data-tooltip]::before {
+  content: "";
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: #16161f;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.15s ease;
+  z-index: 60;
+}
+
+[data-tooltip]:hover::after,
+[data-tooltip]:focus-visible::after {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+[data-tooltip]:hover::before,
+[data-tooltip]:focus-visible::before {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ---- cards & surfaces (re-skin the existing Tailwind utility classes) ---- */
+
+.bg-neutral-900 {
+  background: linear-gradient(180deg, #14141d, #0b0b11) !important;
+}
+
+.border-neutral-800 {
+  border-color: var(--line) !important;
+}
+
+.border-neutral-700 {
+  border-color: #2a3145 !important;
+}
+
+.border-white\/10 {
+  border-color: rgba(94, 234, 212, 0.14) !important;
+}
+
+/* pill-shaped category badges */
+.rounded-full.border-neutral-700 {
+  border-color: rgba(94, 234, 212, 0.35) !important;
+  background: rgba(94, 234, 212, 0.08) !important;
+  color: var(--accent) !important;
+}
+
+/* small rectangular tech-stack tags */
+.rounded.bg-neutral-800 {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* clickable cards lift + scale slightly on hover for a livelier feel */
+a.hover\:bg-neutral-800 {
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+a.hover\:bg-neutral-800:hover {
+  background: #171726 !important;
+  border-color: rgba(94, 234, 212, 0.4) !important;
+  box-shadow: 0 20px 45px -20px rgba(94, 234, 212, 0.45);
+  transform: translateY(-4px) scale(1.01);
+}
+
+/* generic bordered surfaces get a subtle lift too */
+.rounded-2xl.border-neutral-800 {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.rounded-2xl.border-neutral-800:hover {
+  border-color: rgba(94, 234, 212, 0.3) !important;
+  box-shadow: 0 20px 45px -26px rgba(56, 189, 248, 0.35);
+}
+
+/* ---- links & nav ---- */
+
+.hover\:text-white:hover {
+  color: var(--accent) !important;
+}
+
+nav a.text-white.font-medium {
+  color: var(--accent) !important;
+}
+
+.text-blue-400 {
+  color: var(--accent) !important;
+}
+
+a[style*="1a73e8"] {
+  color: var(--accent) !important;
+}
+
+/* ---- skill chips ---- */
+
+.skill-chip {
+  cursor: help;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+/* cycle through the accent palette so the skills grid feels lively, not one flat color */
+.skill-chip:nth-of-type(4n+1):hover { border-color: rgba(94, 234, 212, 0.55); background-color: rgba(94, 234, 212, 0.18) !important; }
+.skill-chip:nth-of-type(4n+2):hover { border-color: rgba(56, 189, 248, 0.55); background-color: rgba(56, 189, 248, 0.18) !important; }
+.skill-chip:nth-of-type(4n+3):hover { border-color: rgba(244, 114, 182, 0.55); background-color: rgba(244, 114, 182, 0.18) !important; }
+.skill-chip:nth-of-type(4n+4):hover { border-color: rgba(251, 191, 36, 0.55); background-color: rgba(251, 191, 36, 0.18) !important; }
+
+.skill-chip:hover {
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* ---- form inputs ---- */
+
+.focus\:border-neutral-400:focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px rgba(94, 234, 212, 0.15);
+}
+
+/* ---- buttons ---- */
+
+.rounded-lg.border-neutral-700,
+.rounded-md.border-neutral-700 {
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.hover\:bg-white\/10:hover {
+  background-color: rgba(94, 234, 212, 0.14) !important;
+  border-color: rgba(94, 234, 212, 0.45) !important;
+  box-shadow: 0 12px 28px -14px rgba(94, 234, 212, 0.5);
+  transform: translateY(-2px);
+}
+
+button[type="submit"] {
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+button[type="submit"]:hover {
+  border-color: var(--accent) !important;
+  box-shadow: 0 10px 30px -14px rgba(94, 234, 212, 0.45);
+  transform: translateY(-2px);
+}
+
+/* first CTA in the hero button row reads as the primary action — give it a filled gradient */
+.flex.flex-wrap.gap-3.text-sm > a:first-child {
+  background: linear-gradient(120deg, var(--accent), var(--accent-2));
+  color: #06110f !important;
+  font-weight: 600;
+  border-color: transparent !important;
+}
+
+.flex.flex-wrap.gap-3.text-sm > a:first-child:hover {
+  background: linear-gradient(120deg, var(--accent-2), var(--accent)) !important;
+  box-shadow: 0 14px 32px -12px rgba(94, 234, 212, 0.6);
+  transform: translateY(-2px);
+}
