@@ -5,6 +5,15 @@ k<!doctype html>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Workforce Efficiency System — Vishal Hegde</title>
 
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PFP9SLNDZ5"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-PFP9SLNDZ5');
+  </script>
+
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
@@ -22,6 +31,7 @@ k<!doctype html>
       scrollbar-width: none;
     }
   </style>
+  <link rel="stylesheet" href="static/theme.css">
 </head>
 <body class="antialiased selection:bg-white/20">
 
@@ -35,7 +45,7 @@ k<!doctype html>
           <span class="text-sm font-medium sm:text-base group-hover:text-white transition">Vishal Hegde</span>
         </a>
 
-        <nav class="hidden gap-6 text-sm text-neutral-200 md:flex">
+        <nav class="hidden gap-6 text-sm text-neutral-200 md:flex" aria-label="Primary">
           <a href="index.html" class="hover:text-white transition">Home</a>
           <a href="index.html#projects" class="text-white font-medium">Projects</a>
           <a href="index.html#connect" class="hover:text-white transition">Connect</a>
@@ -55,8 +65,12 @@ k<!doctype html>
     <section class="mb-12 border-b border-neutral-800 pb-8">
       <div class="mb-4">
         <span class="rounded-full border border-neutral-700 bg-neutral-900 px-3 py-1 text-xs text-neutral-400">Computer Vision & Web Dev</span>
+        <span class="rounded bg-amber-900/40 border border-amber-800 px-2 py-0.5 text-[10px] text-amber-200 uppercase tracking-wide">Archived — v1</span>
       </div>
-      <h1 class="text-3xl font-bold sm:text-5xl mb-4">Workforce Efficiency Monitoring</h1>
+      <h1 class="gradient-heading text-3xl font-bold sm:text-5xl mb-4">Workforce Efficiency Monitoring</h1>
+      <p class="mb-4 text-xs text-neutral-500">
+        This is the original Flask/YOLOv8 version, kept for reference. The current, actively maintained version uses Django, DeepSORT tracking, and helmet-compliance detection — see the updated page below.
+      </p>
       <a href="project1updated.html"
    class="inline-flex items-center gap-2 rounded-full bg-blue-600/90 px-5 py-2 text-xs font-bold uppercase tracking-wide text-white shadow-[0_0_15px_rgba(37,99,235,0.5)] backdrop-blur-md transition-all hover:scale-105 hover:bg-blue-500 hover:shadow-[0_0_25px_rgba(37,99,235,0.7)]">
 
@@ -222,7 +236,7 @@ k<!doctype html>
         <div class="sticky top-28 space-y-8">
             <div class="rounded-2xl border border-neutral-800 bg-neutral-900/50 p-6 backdrop-blur-sm">
                 <h3 class="mb-4 text-sm font-semibold uppercase tracking-wider text-neutral-500">Table of Contents</h3>
-                <nav class="space-y-2 text-sm">
+                <nav class="space-y-2 text-sm" aria-label="Table of contents">
                     <a href="#overview" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Overview</a>
                     <a href="#login" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Login & Admin</a>
                     <a href="#detection" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Worker Detection</a>
