@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Backend &amp; AI Engineering Internship — Vishal Hegde</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PFP9SLNDZ5"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-PFP9SLNDZ5');
+  </script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body {
+      background: #000;
+      color: #f9fafb;
+      min-height: 100vh;
+    }
+  </style>
+  <link rel="stylesheet" href="static/theme.css">
+</head>
+<body class="antialiased selection:bg-white/20">
+
+  <header class="fixed top-0 inset-x-0 z-50">
+    <div class="mx-auto max-w-5xl px-4">
+      <div class="mt-3 mb-2 flex items-center justify-between rounded-2xl border border-white/10 bg-black/50 px-4 py-3 backdrop-blur-md">
+        <a href="index.html" class="flex items-center gap-2 group">
+          <div class="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-sm font-semibold group-hover:bg-white/20 transition">
+            VH
+          </div>
+          <span class="text-sm font-medium sm:text-base group-hover:text-white transition">Vishal Hegde</span>
+        </a>
+
+        <nav class="hidden gap-6 text-sm text-neutral-200 md:flex" aria-label="Primary">
+          <a href="index.html" class="hover:text-white transition">Home</a>
+          <a href="index.html#skills" class="hover:text-white transition">Skills</a>
+          <a href="index.html#projects" class="hover:text-white transition">Projects</a>
+          <a href="index.html#experience" class="text-white font-medium">Experience</a>
+          <a href="index.html#connect" class="hover:text-white transition">Connect</a>
+        </nav>
+
+        <button class="md:hidden p-1 text-neutral-200" aria-label="Menu">
+          <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M4 12h16M4 17h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-6xl px-4 pt-32 pb-16 text-white">
+
+    <section class="mb-12 border-b border-neutral-800 pb-8">
+      <div class="mb-4">
+        <span class="rounded-full border border-neutral-700 bg-neutral-900 px-3 py-1 text-xs text-neutral-400">Internship — Backend &amp; AI Engineering</span>
+      </div>
+      <h1 class="gradient-heading text-3xl font-bold sm:text-5xl mb-4">Backend &amp; AI Engineering Intern — Volvo Construction Equipment</h1>
+      <p class="max-w-3xl text-lg text-neutral-400 leading-relaxed">
+        During this internship I contributed to an enterprise AI platform effort at Volvo
+        Construction Equipment: a centralized portal hosting multiple AI-powered business
+        applications, a monitoring/observability layer for that platform, and natural-language
+        assistants that help internal users search technical and diagnostic knowledge bases. The
+        summary below intentionally describes the <em>capabilities and engineering patterns</em>
+        involved rather than internal architecture, data sources, or proprietary implementation
+        details.
+      </p>
+
+      <div class="mt-6 flex flex-wrap gap-2 text-xs text-neutral-300">
+        <span class="rounded bg-neutral-800 px-2 py-1">Django</span>
+        <span class="rounded bg-neutral-800 px-2 py-1">PostgreSQL + pgvector</span>
+        <span class="rounded bg-neutral-800 px-2 py-1">Azure App Service</span>
+        <span class="rounded bg-neutral-800 px-2 py-1">Microsoft Entra ID (MSAL) SSO</span>
+        <span class="rounded bg-neutral-800 px-2 py-1">RAG / Hybrid Search</span>
+        <span class="rounded bg-neutral-800 px-2 py-1">REST APIs</span>
+        <span class="rounded bg-neutral-800 px-2 py-1">Bash / Linux Deployment</span>
+      </div>
+    </section>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+
+      <div class="lg:col-span-8 space-y-16">
+
+        <section id="aihub" class="scroll-mt-32">
+          <h2 class="text-2xl font-semibold mb-4 text-white">AI Marketplace — Enterprise AI Platform</h2>
+          <p class="text-neutral-300 leading-relaxed mb-4">
+            A centralized, enterprise-grade AI platform built to host and deliver multiple
+            AI-powered business applications under a single, secure, unified web portal — enabling
+            different teams across the organization (sales, dealer support, product engineering,
+            finance, market intelligence, and more) to access purpose-built AI tools through one
+            common gateway, without each team needing to build and maintain separate
+            infrastructure.
+          </p>
+
+          <figure class="mb-6 rounded-xl border border-neutral-800 bg-neutral-900 p-4">
+            <div class="rounded-lg border border-neutral-800 bg-[#0d0d12] overflow-hidden">
+              <div class="flex items-center gap-1.5 border-b border-neutral-800 bg-neutral-900 px-3 py-2">
+                <span class="h-2.5 w-2.5 rounded-full bg-neutral-700"></span>
+                <span class="h-2.5 w-2.5 rounded-full bg-neutral-700"></span>
+                <span class="h-2.5 w-2.5 rounded-full bg-neutral-700"></span>
+                <span class="ml-3 text-[11px] text-neutral-500">ai-marketplace-portal (illustrative mockup)</span>
+              </div>
+              <div class="p-4 sm:p-6">
+                <div class="mb-4 flex items-center justify-between">
+                  <span class="text-sm font-semibold text-white">Enterprise AI Marketplace</span>
+                  <div class="flex gap-2 text-[10px] text-neutral-400">
+                    <span class="rounded border border-neutral-700 px-2 py-1">Admin Portal</span>
+                    <span class="rounded border border-neutral-700 px-2 py-1">Sign Out</span>
+                  </div>
+                </div>
+                <div class="mb-4 rounded-lg bg-gradient-to-r from-neutral-800 to-neutral-900 p-4">
+                  <p class="text-sm font-semibold text-white">One platform for AI-powered business tools</p>
+                  <p class="text-xs text-neutral-400 mt-1">Forecasting · diagnostics · market intelligence · document Q&amp;A</p>
+                </div>
+                <div class="mb-3 flex gap-4 text-[11px] text-neutral-500 border-b border-neutral-800 pb-2">
+                  <span class="text-teal-300">Recently Used</span>
+                  <span>Category A</span>
+                  <span>Category B</span>
+                  <span>Category C</span>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                  <div class="rounded-lg border border-neutral-800 bg-neutral-900 p-3">
+                    <div class="h-6 w-6 rounded bg-teal-400/20 mb-2"></div>
+                    <div class="h-2 w-3/4 rounded bg-neutral-700 mb-1"></div>
+                    <div class="h-2 w-1/2 rounded bg-neutral-800"></div>
+                    <span class="mt-2 inline-block rounded-full bg-emerald-900/40 px-2 py-0.5 text-[9px] text-emerald-300">Running</span>
+                  </div>
+                  <div class="rounded-lg border border-neutral-800 bg-neutral-900 p-3">
+                    <div class="h-6 w-6 rounded bg-sky-400/20 mb-2"></div>
+                    <div class="h-2 w-3/4 rounded bg-neutral-700 mb-1"></div>
+                    <div class="h-2 w-1/2 rounded bg-neutral-800"></div>
+                    <span class="mt-2 inline-block rounded-full bg-emerald-900/40 px-2 py-0.5 text-[9px] text-emerald-300">Running</span>
+                  </div>
+                  <div class="rounded-lg border border-neutral-800 bg-neutral-900 p-3">
+                    <div class="h-6 w-6 rounded bg-teal-400/20 mb-2"></div>
+                    <div class="h-2 w-3/4 rounded bg-neutral-700 mb-1"></div>
+                    <div class="h-2 w-1/2 rounded bg-neutral-800"></div>
+                    <span class="mt-2 inline-block rounded-full bg-emerald-900/40 px-2 py-0.5 text-[9px] text-emerald-300">Running</span>
+                  </div>
+                  <div class="rounded-lg border border-neutral-800 bg-neutral-900 p-3">
+                    <div class="h-6 w-6 rounded bg-sky-400/20 mb-2"></div>
+                    <div class="h-2 w-3/4 rounded bg-neutral-700 mb-1"></div>
+                    <div class="h-2 w-1/2 rounded bg-neutral-800"></div>
+                    <span class="mt-2 inline-block rounded-full bg-emerald-900/40 px-2 py-0.5 text-[9px] text-emerald-300">Running</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <figcaption class="mt-2 text-xs text-neutral-500">
+              Illustrative mockup only — recreated generically to convey the portal's shape. Not a screenshot of the
+              real platform; no real branding, product names, or data are shown.
+            </figcaption>
+          </figure>
+
+          <ul class="list-disc list-inside space-y-2 text-neutral-300">
+            <li>Designed and helped build an enterprise AI marketplace platform that hosts multiple independent AI-powered applications under a single secure portal, enabling centralized access, authentication, and governance across business functions.</li>
+            <li>Contributed to a scalable multi-tenant platform allowing new AI tools/applications to be independently developed and plugged in without disrupting existing services, reducing time-to-deploy for new business use cases.</li>
+            <li>Implemented enterprise single sign-on (SSO) and role-based access control so employees across different departments securely access only the tools relevant to their role.</li>
+            <li>Helped build the platform on a cloud-native architecture (Microsoft Azure) with automated deployment pipelines, supporting reliability, security, and scalability for company-wide use.</li>
+            <li>Contributed to a unified user experience layer (a modern, consistent web interface) across a diverse suite of AI applications spanning customer support, market analytics, forecasting, document intelligence, and operational insights.</li>
+            <li>Supported self-service AI adoption across business units by providing a common platform where new AI capabilities can be onboarded and made available to end users quickly and securely.</li>
+          </ul>
+        </section>
+
+        <section id="observability" class="scroll-mt-32">
+          <h2 class="text-2xl font-semibold mb-4 text-white">Observability &amp; Health Monitoring Dashboard</h2>
+          <p class="text-neutral-300 leading-relaxed mb-4">
+            A companion monitoring dashboard that gives platform administrators visibility into the
+            health, errors, incidents, and usage of the AI marketplace — without generating that
+            data itself. It reads and visualizes operational signals the main platform already
+            produces, so problems can be spotted and triaged quickly.
+          </p>
+
+          <figure class="mb-6 rounded-xl border border-neutral-800 bg-neutral-900 p-4">
+            <div class="rounded-lg border border-neutral-800 bg-[#0d0d12] overflow-hidden">
+              <div class="flex items-center gap-1.5 border-b border-neutral-800 bg-neutral-900 px-3 py-2">
+                <span class="h-2.5 w-2.5 rounded-full bg-neutral-700"></span>
+                <span class="h-2.5 w-2.5 rounded-full bg-neutral-700"></span>
+                <span class="h-2.5 w-2.5 rounded-full bg-neutral-700"></span>
+                <span class="ml-3 text-[11px] text-neutral-500">observability-dashboard (illustrative mockup)</span>
+              </div>
+              <div class="flex flex-col sm:flex-row text-xs">
+                <div class="w-full sm:w-44 shrink-0 border-b sm:border-b-0 sm:border-r border-neutral-800 p-3 space-y-1.5">
+                  <p class="mb-2 text-[10px] uppercase tracking-wide text-neutral-500">Monitoring</p>
+                  <div class="rounded-md bg-teal-400/10 border border-teal-400/30 px-2 py-1.5 text-teal-300">Overview</div>
+                  <div class="px-2 py-1.5 text-neutral-400">System Health</div>
+                  <div class="px-2 py-1.5 text-neutral-400">Incidents</div>
+                  <div class="px-2 py-1.5 text-neutral-400">Error Logs</div>
+                  <div class="px-2 py-1.5 text-neutral-400">Alerts</div>
+                  <div class="px-2 py-1.5 text-neutral-400">Usage Analytics</div>
+                </div>
+                <div class="flex-1 p-4">
+                  <div class="mb-3">
+                    <p class="text-sm font-semibold text-white">Overview</p>
+                    <p class="text-[10px] text-neutral-500">Live platform status · auto-refreshes</p>
+                  </div>
+                  <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
+                    <div class="rounded-md border border-neutral-800 bg-neutral-900 p-2.5">
+                      <p class="text-lg font-bold text-emerald-400">11/11</p>
+                      <p class="text-[10px] text-neutral-500">Services Up</p>
+                    </div>
+                    <div class="rounded-md border border-neutral-800 bg-neutral-900 p-2.5">
+                      <p class="text-lg font-bold text-amber-400">6</p>
+                      <p class="text-[10px] text-neutral-500">Open Incidents</p>
+                    </div>
+                    <div class="rounded-md border border-neutral-800 bg-neutral-900 p-2.5">
+                      <p class="text-lg font-bold text-emerald-400">0</p>
+                      <p class="text-[10px] text-neutral-500">Errors (5 min)</p>
+                    </div>
+                    <div class="rounded-md border border-neutral-800 bg-neutral-900 p-2.5">
+                      <p class="text-lg font-bold text-sky-400">79</p>
+                      <p class="text-[10px] text-neutral-500">Unread Alerts</p>
+                    </div>
+                  </div>
+                  <div class="rounded-md border border-neutral-800 overflow-hidden">
+                    <div class="grid grid-cols-3 bg-neutral-900 px-3 py-1.5 text-[10px] uppercase tracking-wide text-neutral-500">
+                      <span>Service</span><span>Status</span><span>Heartbeat</span>
+                    </div>
+                    <div class="grid grid-cols-3 px-3 py-1.5 border-t border-neutral-800 text-neutral-400">
+                      <span>API Gateway</span><span class="text-emerald-400">Up</span><span>1 min ago</span>
+                    </div>
+                    <div class="grid grid-cols-3 px-3 py-1.5 border-t border-neutral-800 text-neutral-400">
+                      <span>Web Application</span><span class="text-emerald-400">Up</span><span>1 min ago</span>
+                    </div>
+                    <div class="grid grid-cols-3 px-3 py-1.5 border-t border-neutral-800 text-neutral-400">
+                      <span>Database</span><span class="text-emerald-400">Up</span><span>1 min ago</span>
+                    </div>
+                    <div class="grid grid-cols-3 px-3 py-1.5 border-t border-neutral-800 text-neutral-400">
+                      <span>External LLM Service</span><span class="text-emerald-400">Up</span><span>10 min ago</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <figcaption class="mt-2 text-xs text-neutral-500">
+              Illustrative mockup only — recreated generically to convey the dashboard's shape. Not a screenshot of
+              the real tool; no real branding, service names, personal data, or metric values are shown.
+            </figcaption>
+          </figure>
+
+          <ul class="list-disc list-inside space-y-2 text-neutral-300">
+            <li>Built a superuser-gated dashboard summarizing service uptime/degradation, open incidents, recent errors, and unread alerts at a glance.</li>
+            <li>Implemented incident grouping so repeated errors of the same type/service become a single trackable incident (open → acknowledged → resolved), instead of a flood of duplicate alerts.</li>
+            <li>Added noise filtering (dropping static-asset/favicon noise and duplicate log entries) and stale-heartbeat detection to flag services as degraded/down when expected health signals stop arriving.</li>
+            <li>Built usage/cost analytics views summarizing AI request volume, latency, and token/cost trends per application and per user, to support capacity planning and cost visibility.</li>
+            <li>Secured administrative access with Microsoft Entra ID single sign-on, restricted to a pre-approved list of administrators (no automatic account creation).</li>
+            <li>Deployed as an independent Azure App Service process alongside the main platform, using a Gunicorn/WSGI production server.</li>
+          </ul>
+        </section>
+
+        <section id="mdi" class="scroll-mt-32">
+          <h2 class="text-2xl font-semibold mb-4 text-white">Machine Diagnostics Intelligence Assistant</h2>
+          <p class="text-neutral-300 leading-relaxed mb-4">
+            An AI-powered assistant that helps technicians and support engineers quickly diagnose
+            equipment issues by asking questions in plain language instead of manually searching
+            through historical service/case records.
+          </p>
+
+          <ul class="list-disc list-inside space-y-2 text-neutral-300">
+            <li>A technician types a question about a machine issue (symptoms, fault codes, or a specific model).</li>
+            <li>The system searches a large repository of historical diagnostic/case data for the most relevant past cases and information.</li>
+            <li>It combines semantic search (understanding meaning/context) with traditional keyword search, so relevant results surface even when the wording doesn't exactly match.</li>
+            <li>An AI model reads the most relevant matches and writes a clear, human-readable answer/summary — citing what it found rather than inventing information.</li>
+            <li>Built-in quality checks continuously validate that answers stay accurate and grounded in real data, rather than fabricated.</li>
+          </ul>
+          <p class="mt-4 text-sm text-neutral-400 italic">
+            "Built an AI diagnostics assistant that lets technicians query historical equipment case
+            data in natural language, using a hybrid search engine (semantic + keyword) and
+            automated accuracy testing to ensure reliable, fact-based responses."
+          </p>
+        </section>
+
+        <figure class="rounded-xl border border-neutral-800 bg-neutral-900 p-4">
+          <div class="rounded-lg border border-neutral-800 bg-[#0d0d12] overflow-hidden">
+            <div class="flex items-center gap-1.5 border-b border-neutral-800 bg-neutral-900 px-3 py-2">
+              <span class="h-2.5 w-2.5 rounded-full bg-neutral-700"></span>
+              <span class="h-2.5 w-2.5 rounded-full bg-neutral-700"></span>
+              <span class="h-2.5 w-2.5 rounded-full bg-neutral-700"></span>
+              <span class="ml-3 text-[11px] text-neutral-500">knowledge-assistant (illustrative mockup)</span>
+            </div>
+            <div class="flex flex-col sm:flex-row text-xs">
+              <div class="w-full sm:w-48 shrink-0 border-b sm:border-b-0 sm:border-r border-neutral-800 p-3 space-y-3">
+                <div class="rounded-md border border-neutral-700 px-2 py-1.5 text-neutral-400">+ New conversation</div>
+                <div>
+                  <p class="text-neutral-500 mb-1.5">Topic A</p>
+                  <div class="space-y-1.5 text-neutral-400">
+                    <div class="h-2 w-5/6 rounded bg-neutral-800"></div>
+                    <div class="h-2 w-2/3 rounded bg-neutral-800"></div>
+                    <div class="h-2 w-3/4 rounded bg-neutral-800"></div>
+                  </div>
+                </div>
+                <div>
+                  <p class="text-neutral-500 mb-1.5">Topic B</p>
+                  <div class="space-y-1.5 text-neutral-400">
+                    <div class="h-2 w-5/6 rounded bg-neutral-800"></div>
+                    <div class="h-2 w-2/3 rounded bg-neutral-800"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="flex-1 p-4 space-y-3">
+                <div class="flex gap-2">
+                  <span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-teal-400/20 text-[10px]">AI</span>
+                  <div class="rounded-lg bg-neutral-800 px-3 py-2 text-neutral-300">
+                    Hi! Ask me a question in plain language and I'll search the knowledge base for
+                    relevant, grounded answers.
+                    <p class="mt-1 text-[10px] text-neutral-500">AI-generated — please verify before acting</p>
+                  </div>
+                </div>
+                <div class="rounded-md border border-neutral-700 px-3 py-2 text-neutral-500">Search topics…</div>
+                <div class="space-y-1.5">
+                  <div class="h-2 w-2/5 rounded bg-neutral-800"></div>
+                  <div class="h-2 w-1/3 rounded bg-neutral-800"></div>
+                  <div class="h-2 w-1/2 rounded bg-neutral-800"></div>
+                </div>
+                <div class="rounded-md border border-neutral-800 px-3 py-2 text-neutral-600">Type your question…</div>
+              </div>
+            </div>
+          </div>
+          <figcaption class="mt-2 text-xs text-neutral-500">
+            Illustrative mockup only — a generic representation of the chat-based interface pattern shared by both
+            the Machine Diagnostics and Product Intelligence assistants. Not a screenshot of either real tool; no
+            real branding, product/agent names, or data are shown.
+          </figcaption>
+        </figure>
+
+        <section id="vpi" class="scroll-mt-32 border-l-2 border-neutral-700 pl-6">
+          <h2 class="text-xl font-semibold mb-2 text-white">Volvo Product Intelligence Assistant</h2>
+          <p class="text-neutral-300 leading-relaxed mb-4">
+            An AI-powered assistant that lets internal users ask natural-language questions about
+            product specifications and get instant, accurate answers instead of manually paging
+            through lengthy product documentation.
+          </p>
+          <ul class="list-disc list-inside space-y-2 text-neutral-300">
+            <li>Product documentation is processed into an internal knowledge base, with special handling to accurately capture tabular data (specs, dimensions, capacities) that's typically harder for AI to read correctly than plain text.</li>
+            <li>User questions are matched against the knowledge base using a combination of semantic search and keyword matching, then ranked before being handed to an AI model.</li>
+            <li>The AI model generates a concise, accurate answer grounded in the retrieved content.</li>
+            <li>Safeguards prevent the assistant from responding with unsupported information when the requested data isn't available.</li>
+          </ul>
+          <p class="mt-4 text-sm text-neutral-400 italic">
+            "Built an AI-powered product knowledge assistant that extracts structured data from
+            technical documentation and answers natural-language product specification queries
+            using semantic search and ranking algorithms."
+          </p>
+        </section>
+
+        <section id="skills-used" class="scroll-mt-32">
+          <h2 class="text-2xl font-semibold mb-4 text-white">Engineering Patterns Applied</h2>
+          <div class="overflow-x-auto rounded-xl border border-neutral-800">
+            <table class="w-full text-left text-sm">
+              <thead class="bg-neutral-900 text-neutral-400">
+                <tr>
+                  <th class="px-4 py-2">Area</th>
+                  <th class="px-4 py-2">Applied to</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-neutral-800 text-neutral-300">
+                <tr><td class="px-4 py-2 font-medium">RAG / Hybrid Search</td><td class="px-4 py-2">Diagnostics and product-specification assistants, combining semantic + keyword retrieval before generation.</td></tr>
+                <tr><td class="px-4 py-2 font-medium">PostgreSQL + pgvector</td><td class="px-4 py-2">Storing and querying document/case embeddings for semantic retrieval.</td></tr>
+                <tr><td class="px-4 py-2 font-medium">MSAL / Entra ID SSO</td><td class="px-4 py-2">Single sign-on across the marketplace portal and the separate observability dashboard, each with its own app registration and redirect URI.</td></tr>
+                <tr><td class="px-4 py-2 font-medium">Azure App Service</td><td class="px-4 py-2">Hosting the Django-based marketplace and dashboard apps with automated deployment pipelines.</td></tr>
+                <tr><td class="px-4 py-2 font-medium">ETL</td><td class="px-4 py-2">Processing raw documentation/case data into a structured, searchable knowledge base.</td></tr>
+                <tr><td class="px-4 py-2 font-medium">REST APIs</td><td class="px-4 py-2">Exposing platform features and analytics to the web front-end and other internal services.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="disclaimer" class="scroll-mt-32">
+          <p class="text-xs text-neutral-500 leading-relaxed">
+            Note: this page intentionally omits internal system names, infrastructure details, data
+            sources, and proprietary implementation specifics. It describes engineering
+            capabilities and patterns only, and is safe for public portfolio use.
+          </p>
+        </section>
+
+      </div>
+
+      <aside class="hidden lg:block lg:col-span-4">
+        <div class="sticky top-28 space-y-8">
+            <div class="rounded-2xl border border-neutral-800 bg-neutral-900/50 p-6 backdrop-blur-sm">
+                <h3 class="mb-4 text-sm font-semibold uppercase tracking-wider text-neutral-500">Table of Contents</h3>
+                <nav class="space-y-2 text-sm" aria-label="Table of contents">
+                    <a href="#aihub" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">AI Marketplace</a>
+                    <a href="#observability" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Observability Dashboard</a>
+                    <a href="#mdi" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Machine Diagnostics Intelligence</a>
+                    <a href="#vpi" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Volvo Product Intelligence</a>
+                    <a href="#skills-used" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Engineering Patterns</a>
+                </nav>
+            </div>
+
+            <div class="rounded-2xl border border-neutral-800 bg-neutral-900/50 p-6">
+                <h3 class="mb-2 text-sm font-semibold text-white">Want to know more?</h3>
+                <p class="mb-4 text-xs text-neutral-400">Happy to discuss the engineering approach in an interview or call.</p>
+                <a href="index.html#connect" class="block w-full rounded-lg bg-white px-4 py-2 text-center text-sm font-bold text-black hover:bg-neutral-200 transition">
+                    Get in Touch
+                </a>
+            </div>
+        </div>
+      </aside>
+
+    </div>
+
+  </main>
+
+  <footer class="border-t border-neutral-900 bg-black py-8 text-sm text-neutral-500">
+    <div class="mx-auto max-w-5xl px-4 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="text-center md:text-left">
+        <p>© <span id="year"></span> Vishal Hegde. All rights reserved.</p>
+      </div>
+      <div class="flex gap-4">
+        <a href="index.html" class="hover:text-white transition">Home</a>
+        <a href="index.html#experience" class="hover:text-white transition">Experience</a>
+        <a href="mailto:hegdevishals75@gmail.com" class="hover:text-white transition">Contact</a>
+      </div>
+    </div>
+    <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+  </footer>
+
+</body>
+</html>
