@@ -7,6 +7,15 @@
   <title>Workforce Efficiency System Updated — Vishal Hegde</title>
 
 
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PFP9SLNDZ5"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-PFP9SLNDZ5');
+  </script>
+
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
@@ -24,6 +33,7 @@
       scrollbar-width: none;
     }
   </style>
+  <link rel="stylesheet" href="static/theme.css">
 </head>
 <body class="antialiased selection:bg-white/20">
 
@@ -37,7 +47,7 @@
           <span class="text-sm font-medium sm:text-base group-hover:text-white transition">Vishal Hegde</span>
         </a>
 
-        <nav class="hidden gap-6 text-sm text-neutral-200 md:flex">
+        <nav class="hidden gap-6 text-sm text-neutral-200 md:flex" aria-label="Primary">
           <a href="index.html" class="hover:text-white transition">Home</a>
           <a href="index.html#projects" class="text-white font-medium">Projects</a>
           <a href="index.html#connect" class="hover:text-white transition">Connect</a>
@@ -60,7 +70,7 @@
         <span class="rounded-full border border-neutral-700 bg-neutral-900 px-3 py-1 text-xs text-neutral-400">Computer Vision & Web Dev</span>
       </div>
 
-      <h1 class="text-3xl font-bold sm:text-5xl mb-4">Workforce Efficiency System Using Computer Vision and Django</h1>
+      <h1 class="gradient-heading text-3xl font-bold sm:text-5xl mb-4">Workforce Efficiency System Using Computer Vision and Django</h1>
 
       <p class="max-w-3xl text-lg text-neutral-400 leading-relaxed">
         A comprehensive monitoring solution combining <strong>Django</strong>, <strong>YOLOv8</strong>, and <strong>DeepSORT</strong> to automate attendance, track movement, and generate actionable workforce insights.
@@ -222,13 +232,23 @@
             </p>
         </section>
 
+        <section id="engineering" class="scroll-mt-32">
+          <h2 class="text-2xl font-semibold mb-4 text-white">Engineering Notes</h2>
+          <ul class="list-disc list-inside space-y-3 text-neutral-300">
+            <li><strong>Tracking continuity:</strong> Switching from simple ROI-crossing alerts to DeepSORT meant handling ID switches during occlusion (workers briefly blocking each other) — tuning the re-identification embedding distance and track-expiry window was necessary to keep entrance/exit counts accurate rather than double-counting.</li>
+            <li><strong>Two-stage attendance logic:</strong> Marking attendance only when both face recognition <em>and</em> helmet detection succeed (an AND condition, not OR) required sequencing the two models per frame and deciding how many consecutive frames of agreement to require before logging an entry, to avoid single-frame false negatives blocking a legitimate check-in.</li>
+            <li><strong>Detection confidence tuning:</strong> The same YOLOv8 model runs across very different scenes (corridor, classroom, factory floor); a single confidence threshold that worked well in one environment produced false positives/negatives in another, so thresholds and NMS settings needed per-scenario tuning rather than one global default.</li>
+            <li><strong>Throughput on limited hardware:</strong> Running detection + tracking + recognition in the same pipeline in real time meant frame-skipping and resolution downscaling were needed to keep the live feed responsive on non-GPU-accelerated demo hardware.</li>
+          </ul>
+        </section>
+
       </div>
 
       <aside class="hidden lg:block lg:col-span-4">
         <div class="sticky top-28 space-y-8">
             <div class="rounded-2xl border border-neutral-800 bg-neutral-900/50 p-6 backdrop-blur-sm">
                 <h3 class="mb-4 text-sm font-semibold uppercase tracking-wider text-neutral-500">Table of Contents</h3>
-                <nav class="space-y-2 text-sm">
+                <nav class="space-y-2 text-sm" aria-label="Table of contents">
                     <a href="#overview" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Overview</a>
                     <a href="#login" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Django Auth</a>
                     <a href="#detection" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Worker Detection</a>
@@ -239,6 +259,7 @@
                     <a href="#shifts" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Shift Management</a>
                     <a href="#attendance" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Face & Helmet</a>
                     <a href="#reports" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Reports</a>
+                    <a href="#engineering" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Engineering Notes</a>
                 </nav>
             </div>
 
