@@ -1,13 +1,41 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <title>404 Not Found</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>404 — Page Not Found — Vishal Hegde</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PFP9SLNDZ5"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-PFP9SLNDZ5');
+  </script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body {
+      background: #000;
+      color: #f9fafb;
+      min-height: 100vh;
+    }
+  </style>
+  <link rel="stylesheet" href="static/theme.css">
 </head>
-<body>
-    <h1>😵 Oops! Page Not Found</h1>
-    <p>Looks like you found a dead link.</p>
-    <br><br>
-    <a href="/">Go Back Home</a>
+<body class="antialiased selection:bg-white/20">
+  <main class="mx-auto flex min-h-screen max-w-2xl flex-col items-center justify-center px-4 text-center text-white">
+    <p class="gradient-heading text-6xl font-extrabold sm:text-7xl">404</p>
+    <h1 class="mt-4 text-xl font-semibold sm:text-2xl">Page Not Found</h1>
+    <p class="mt-3 text-sm text-neutral-400">
+      The page you're looking for doesn't exist or may have moved.
+    </p>
+    <a href="/"
+       class="mt-8 rounded-lg border border-neutral-700 px-5 py-2.5 text-sm hover:bg-white/10 transition">
+      Back to Home
+    </a>
+  </main>
 </body>
 </html>
