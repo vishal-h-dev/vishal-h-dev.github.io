@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Ark — Deduplicating Backup Engine — Vishal Hegde</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PFP9SLNDZ5"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-PFP9SLNDZ5');
+  </script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body {
+      background: #000;
+      color: #f9fafb;
+      min-height: 100vh;
+    }
+  </style>
+  <link rel="stylesheet" href="static/theme.css">
+</head>
+<body class="antialiased selection:bg-white/20">
+
+  <header class="fixed top-0 inset-x-0 z-50">
+    <div class="mx-auto max-w-5xl px-4">
+      <div class="mt-3 mb-2 flex items-center justify-between rounded-2xl border border-white/10 bg-black/50 px-4 py-3 backdrop-blur-md">
+        <a href="index.html" class="flex items-center gap-2 group">
+          <div class="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-sm font-semibold group-hover:bg-white/20 transition">
+            VH
+          </div>
+          <span class="text-sm font-medium sm:text-base group-hover:text-white transition">Vishal Hegde</span>
+        </a>
+
+        <nav class="hidden gap-6 text-sm text-neutral-200 md:flex" aria-label="Primary">
+          <a href="index.html" class="hover:text-white transition">Home</a>
+          <a href="index.html#skills" class="hover:text-white transition">Skills</a>
+          <a href="index.html#projects" class="text-white font-medium">Projects</a>
+          <a href="index.html#experience" class="hover:text-white transition">Experience</a>
+          <a href="index.html#connect" class="hover:text-white transition">Connect</a>
+        </nav>
+
+        <button class="md:hidden p-1 text-neutral-200" aria-label="Menu">
+          <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M4 12h16M4 17h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-6xl px-4 pt-32 pb-16 text-white">
+
+    <section class="mb-12 border-b border-neutral-800 pb-8">
+      <div class="mb-4">
+        <span class="rounded-full border border-neutral-700 bg-neutral-900 px-3 py-1 text-xs text-neutral-400">Systems / Storage Engineering</span>
+      </div>
+      <h1 class="gradient-heading text-3xl font-bold sm:text-5xl mb-4">Ark — Deduplicating, Snapshot-Based Backup Engine</h1>
+      <p class="max-w-3xl text-lg text-neutral-400 leading-relaxed">
+        A backup &amp; restore engine built the way real tools (restic, borg) work — implemented from
+        scratch in pure Python. Identical and near-identical data is stored only once across every file
+        and every backup, so snapshots are cheap and incremental backups happen automatically.
+      </p>
+
+      <div class="mt-6 flex flex-wrap gap-2 text-xs text-neutral-300">
+        <span class="rounded bg-neutral-800 px-2 py-1">Python (stdlib)</span>
+        <span class="rounded bg-neutral-800 px-2 py-1">Content-Defined Chunking</span>
+        <span class="rounded bg-neutral-800 px-2 py-1">BLAKE2b</span>
+        <span class="rounded bg-neutral-800 px-2 py-1">AES-256-GCM (optional)</span>
+        <span class="rounded bg-neutral-800 px-2 py-1">CLI</span>
+        <span class="rounded bg-neutral-800 px-2 py-1">Unit Tested</span>
+      </div>
+    </section>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+
+      <div class="lg:col-span-8 space-y-16">
+
+        <section id="overview" class="scroll-mt-32">
+          <h2 class="text-2xl font-semibold mb-4 text-white">Overview</h2>
+          <p class="text-neutral-300 leading-relaxed">
+            Ark is a content-addressed backup engine. Rather than copying whole files, it splits data
+            into variable-length chunks, deduplicates identical chunks across every file and every
+            snapshot ever taken, and organizes backups as immutable, git-style manifests. The core
+            engine has zero external dependencies; encryption is an optional add-on backed by the
+            well-vetted <code>cryptography</code> package.
+          </p>
+        </section>
+
+        <section id="chunking" class="scroll-mt-32">
+          <h2 class="text-2xl font-semibold mb-4 text-white">Content-Defined Chunking</h2>
+          <p class="text-neutral-300 leading-relaxed">
+            A FastCDC gear-rolling hash decides chunk boundaries based on the <em>content</em> of the
+            data itself, not fixed offsets. That means inserting a single byte near the start of a
+            large file only shifts one or two chunk boundaries instead of every boundary after it —
+            the classic failure mode of naive fixed-size blocking. Files are chunked in bounded memory,
+            so multi-gigabyte files back up without ever being loaded fully into RAM.
+          </p>
+        </section>
+
+        <section id="dedup" class="scroll-mt-32">
+          <h2 class="text-2xl font-semibold mb-4 text-white">Deduplication &amp; Snapshots</h2>
+          <p class="text-neutral-300 leading-relaxed mb-4">
+            Every chunk is addressed by its BLAKE2b hash. Re-backing-up unchanged data stores
+            <strong>zero</strong> new bytes — the repository simply references the existing chunk.
+            Each backup run produces an immutable snapshot: a content-addressed manifest listing which
+            chunks make up which files, so history is tamper-evident and every snapshot can be restored
+            independently.
+          </p>
+          <div class="overflow-x-auto rounded-xl border border-neutral-800">
+            <table class="w-full text-left text-sm">
+              <thead class="bg-neutral-900 text-neutral-400">
+                <tr>
+                  <th class="px-4 py-2">Capability</th>
+                  <th class="px-4 py-2">How</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-neutral-800 text-neutral-300">
+                <tr><td class="px-4 py-2 font-medium">Integrity verification</td><td class="px-4 py-2">Chunks are re-hashed on read, so bit-rot/corruption is detected, never silently restored.</td></tr>
+                <tr><td class="px-4 py-2 font-medium">Garbage collection</td><td class="px-4 py-2"><code>prune</code> runs a mark-and-sweep over all snapshots and deletes unreferenced chunks.</td></tr>
+                <tr><td class="px-4 py-2 font-medium">Encryption (optional)</td><td class="px-4 py-2">AES-256-GCM per chunk, key derived from a passphrase via memory-hard scrypt.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="architecture" class="scroll-mt-32">
+          <h2 class="text-2xl font-semibold mb-4 text-white">Architecture</h2>
+          <div class="rounded-xl border border-neutral-800 bg-neutral-900 p-4 overflow-x-auto mb-4">
+<pre class="text-xs text-neutral-300 leading-relaxed"><code>file ──► FastCDC chunker ──► [chunk, chunk, chunk, ...]
+                               │ BLAKE2b hash each
+                               ▼
+                       content-addressable store
+                    (compress → optionally encrypt → write once)
+                               │
+        snapshot manifest = { path → ordered chunk ids }  (content-addressed)</code></pre>
+          </div>
+          <ul class="list-disc list-inside space-y-2 text-neutral-300 mb-4">
+            <li><strong>Backup</strong> walks the source, streams each file through the chunker, and stores every chunk via <code>put()</code> — a no-op if the chunk already exists anywhere in the repository.</li>
+            <li><strong>Restore</strong> reads the manifest and concatenates each file's chunks back together, re-applying permissions and modification times.</li>
+            <li><strong>Prune</strong> computes the set of chunks reachable from the surviving snapshots (mark-and-sweep) and deletes the rest.</li>
+          </ul>
+          <div class="overflow-x-auto rounded-xl border border-neutral-800">
+            <table class="w-full text-left text-sm">
+              <thead class="bg-neutral-900 text-neutral-400">
+                <tr><th class="px-4 py-2">Module</th><th class="px-4 py-2">Responsibility</th></tr>
+              </thead>
+              <tbody class="divide-y divide-neutral-800 text-neutral-300">
+                <tr><td class="px-4 py-2 font-mono text-xs">chunker.py</td><td class="px-4 py-2">FastCDC content-defined chunking (gear-rolling hash).</td></tr>
+                <tr><td class="px-4 py-2 font-mono text-xs">hashing.py</td><td class="px-4 py-2">BLAKE2b chunk addressing.</td></tr>
+                <tr><td class="px-4 py-2 font-mono text-xs">compress.py</td><td class="px-4 py-2">Adaptive per-chunk compression.</td></tr>
+                <tr><td class="px-4 py-2 font-mono text-xs">crypto.py</td><td class="px-4 py-2">Optional scrypt KDF + AES-256-GCM AEAD.</td></tr>
+                <tr><td class="px-4 py-2 font-mono text-xs">store.py</td><td class="px-4 py-2">Content-addressable, self-verifying chunk store.</td></tr>
+                <tr><td class="px-4 py-2 font-mono text-xs">snapshot.py</td><td class="px-4 py-2">Immutable snapshot manifest model.</td></tr>
+                <tr><td class="px-4 py-2 font-mono text-xs">repository.py</td><td class="px-4 py-2">Backup / restore / verify / prune engine.</td></tr>
+                <tr><td class="px-4 py-2 font-mono text-xs">cli.py</td><td class="px-4 py-2">Command-line interface.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="commands" class="scroll-mt-32">
+          <h2 class="text-2xl font-semibold mb-4 text-white">Command Reference</h2>
+          <div class="overflow-x-auto rounded-xl border border-neutral-800">
+            <table class="w-full text-left text-sm">
+              <thead class="bg-neutral-900 text-neutral-400">
+                <tr><th class="px-4 py-2">Command</th><th class="px-4 py-2">Purpose</th></tr>
+              </thead>
+              <tbody class="divide-y divide-neutral-800 text-neutral-300">
+                <tr><td class="px-4 py-2 font-mono text-xs">init</td><td class="px-4 py-2">Create a repository (<code>--compression</code>, <code>--encrypt</code>, <code>--min/avg/max-size</code>).</td></tr>
+                <tr><td class="px-4 py-2 font-mono text-xs">backup SOURCE</td><td class="px-4 py-2">Snapshot a file/dir (<code>--tag</code>, <code>--exclude GLOB</code>).</td></tr>
+                <tr><td class="px-4 py-2 font-mono text-xs">snapshots</td><td class="px-4 py-2">List snapshots.</td></tr>
+                <tr><td class="px-4 py-2 font-mono text-xs">restore SNAP DEST</td><td class="px-4 py-2">Reconstruct a snapshot (<code>--no-verify</code> to skip hash checks).</td></tr>
+                <tr><td class="px-4 py-2 font-mono text-xs">verify</td><td class="px-4 py-2">Check chunk hashes and snapshot references (<code>--quick</code> for refs only).</td></tr>
+                <tr><td class="px-4 py-2 font-mono text-xs">prune</td><td class="px-4 py-2">Delete unreferenced chunks (<code>--forget SNAP</code> to drop snapshots first).</td></tr>
+                <tr><td class="px-4 py-2 font-mono text-xs">stats</td><td class="px-4 py-2">Repository summary.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="cli" class="scroll-mt-32">
+          <h2 class="text-2xl font-semibold mb-4 text-white">Command-Line Workflow</h2>
+          <div class="rounded-xl border border-neutral-800 bg-neutral-900 p-4 overflow-x-auto">
+<pre class="text-xs text-neutral-300 leading-relaxed"><code># 1. Create a repository
+python -m ark --repo /backups/photos init
+
+# 2. Back up a directory (repeatable; later runs only store what changed)
+python -m ark --repo /backups/photos backup ~/Photos --tag nightly
+
+# 3. List snapshots
+python -m ark --repo /backups/photos snapshots
+
+# 4. Restore a snapshot (id or unique prefix) to a new location
+python -m ark --repo /backups/photos restore 8954af0a /tmp/restored
+
+# 5. Check integrity, then garbage-collect old data
+python -m ark --repo /backups/photos verify
+python -m ark --repo /backups/photos prune --forget &lt;old-snapshot-id&gt;</code></pre>
+          </div>
+        </section>
+
+        <section id="testing" class="scroll-mt-32">
+          <h2 class="text-2xl font-semibold mb-4 text-white">Testing &amp; Design</h2>
+          <p class="text-neutral-300">
+            Covered by a dedicated unittest suite spanning chunking, repository/store behavior, and
+            snapshot integrity. The design deliberately mirrors production backup tools (restic/borg)
+            to demonstrate real-world systems engineering: streaming I/O, content addressing, and
+            crash-safe repository state.
+          </p>
+        </section>
+
+        <section id="limitations" class="scroll-mt-32 border-l-2 border-neutral-700 pl-6">
+          <h2 class="text-xl font-semibold mb-2 text-white">Honest Limitations</h2>
+          <ul class="list-disc list-inside space-y-2 text-neutral-300">
+            <li>Intra-file streaming chunker; cross-file similarity is captured only at the chunk level (no delta-compression of similar-but-not-identical chunks).</li>
+            <li>Snapshots are stored as a single JSON manifest — no tree-level sub-snapshot sharing yet, though chunk-level dedup already makes incrementals cheap.</li>
+            <li>Local filesystem backend only (no remote/object-store backends yet).</li>
+            <li>A backup is only as safe as the medium it lives on — an off-site copy is still recommended.</li>
+          </ul>
+        </section>
+
+      </div>
+
+      <aside class="hidden lg:block lg:col-span-4">
+        <div class="sticky top-28 space-y-8">
+            <div class="rounded-2xl border border-neutral-800 bg-neutral-900/50 p-6 backdrop-blur-sm">
+                <h3 class="mb-4 text-sm font-semibold uppercase tracking-wider text-neutral-500">Table of Contents</h3>
+                <nav class="space-y-2 text-sm" aria-label="Table of contents">
+                    <a href="#overview" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Overview</a>
+                    <a href="#chunking" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Content-Defined Chunking</a>
+                    <a href="#dedup" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Deduplication &amp; Snapshots</a>
+                    <a href="#architecture" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Architecture</a>
+                    <a href="#commands" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Command Reference</a>
+                    <a href="#cli" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">CLI Workflow</a>
+                    <a href="#testing" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Testing &amp; Design</a>
+                    <a href="#limitations" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Honest Limitations</a>
+                </nav>
+            </div>
+
+            <div class="rounded-2xl border border-neutral-800 bg-neutral-900/50 p-6">
+                <h3 class="mb-2 text-sm font-semibold text-white">Interested in this project?</h3>
+                <p class="mb-4 text-xs text-neutral-400">Check out the code on GitHub or contact me for a walkthrough.</p>
+                <a href="https://github.com/vishal-h-dev" class="block w-full rounded-lg bg-white px-4 py-2 text-center text-sm font-bold text-black hover:bg-neutral-200 transition">
+                    View on GitHub
+                </a>
+            </div>
+        </div>
+      </aside>
+
+    </div>
+
+  </main>
+
+  <footer class="border-t border-neutral-900 bg-black py-8 text-sm text-neutral-500">
+    <div class="mx-auto max-w-5xl px-4 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="text-center md:text-left">
+        <p>© <span id="year"></span> Vishal Hegde. All rights reserved.</p>
+      </div>
+      <div class="flex gap-4">
+        <a href="index.html" class="hover:text-white transition">Home</a>
+        <a href="index.html#projects" class="hover:text-white transition">Projects</a>
+        <a href="mailto:hegdevishals75@gmail.com" class="hover:text-white transition">Contact</a>
+      </div>
+    </div>
+    <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+  </footer>
+
+</body>
+</html>
