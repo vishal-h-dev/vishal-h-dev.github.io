@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>BTreeDB — Disk-Based B+-Tree Database — Vishal Hegde</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PFP9SLNDZ5"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-PFP9SLNDZ5');
+  </script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({ startOnLoad: true, theme: "dark" });
+  </script>
+
+  <style>
+    body {
+      background: #000;
+      color: #f9fafb;
+      min-height: 100vh;
+    }
+  </style>
+  <link rel="stylesheet" href="static/theme.css">
+</head>
+<body class="antialiased selection:bg-white/20">
+
+  <header class="fixed top-0 inset-x-0 z-50">
+    <div class="mx-auto max-w-5xl px-4">
+      <div class="mt-3 mb-2 flex items-center justify-between rounded-2xl border border-white/10 bg-black/50 px-4 py-3 backdrop-blur-md">
+        <a href="index.html" class="flex items-center gap-2 group">
+          <div class="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-sm font-semibold group-hover:bg-white/20 transition">
+            VH
+          </div>
+          <span class="text-sm font-medium sm:text-base group-hover:text-white transition">Vishal Hegde</span>
+        </a>
+
+        <nav class="hidden gap-6 text-sm text-neutral-200 md:flex" aria-label="Primary">
+          <a href="index.html" class="hover:text-white transition">Home</a>
+          <a href="index.html#skills" class="hover:text-white transition">Skills</a>
+          <a href="index.html#projects" class="text-white font-medium">Projects</a>
+          <a href="index.html#experience" class="hover:text-white transition">Experience</a>
+          <a href="index.html#connect" class="hover:text-white transition">Connect</a>
+        </nav>
+
+        <button class="md:hidden p-1 text-neutral-200" aria-label="Menu">
+          <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M4 12h16M4 17h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-6xl px-4 pt-32 pb-16 text-white">
+
+    <section class="mb-12 border-b border-neutral-800 pb-8">
+      <div class="mb-4">
+        <span class="rounded-full border border-neutral-700 bg-neutral-900 px-3 py-1 text-xs text-neutral-400">Database Internals</span>
+      </div>
+      <h1 class="gradient-heading text-3xl font-bold sm:text-5xl mb-4">BTreeDB — Disk-Based B+-Tree Key/Value Database</h1>
+      <p class="max-w-3xl text-lg text-neutral-400 leading-relaxed">
+        A dependency-free key/value database implemented from scratch in pure Python — no
+        <code>sqlite3</code>, no <code>pickle</code>, no external storage engine. It implements
+        B+-tree node splitting/merging directly against a paged binary file format, with a
+        write-ahead log for crash-safe transactions and an LRU buffer pool over the page file.
+      </p>
+
+      <div class="mt-6 flex flex-wrap gap-2 text-xs text-neutral-300">
+        <span class="rounded bg-neutral-800 px-2 py-1">Python (stdlib)</span>
+        <span class="rounded bg-neutral-800 px-2 py-1">B+-Tree</span>
+        <span class="rounded bg-neutral-800 px-2 py-1">Write-Ahead Log</span>
+        <span class="rounded bg-neutral-800 px-2 py-1">Buffer Pool (LRU)</span>
+        <span class="rounded bg-neutral-800 px-2 py-1">SQL Subset</span>
+        <span class="rounded bg-neutral-800 px-2 py-1">Tkinter GUI</span>
+        <span class="rounded bg-neutral-800 px-2 py-1">47 Unit Tests</span>
+      </div>
+    </section>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+
+      <div class="lg:col-span-8 space-y-16">
+
+        <section id="overview" class="scroll-mt-32">
+          <h2 class="text-2xl font-semibold mb-4 text-white">Overview</h2>
+          <p class="text-neutral-300 leading-relaxed">
+            BTreeDB was built to demonstrate low-level database internals end-to-end: page layout,
+            binary serialization, buffer management, write-ahead logging, and disk-based tree
+            algorithms — the same building blocks used inside real embedded databases like SQLite
+            and LMDB.
+          </p>
+        </section>
+
+        <section id="storage" class="scroll-mt-32">
+          <h2 class="text-2xl font-semibold mb-4 text-white">Storage Engine</h2>
+          <p class="text-neutral-300 leading-relaxed">
+            A single file holds fixed-size pages; data survives process restarts. Only leaf nodes
+            hold values — internal nodes hold pure routing separator keys — and leaves are linked
+            into a sorted list, so range scans walk the chain in <em>O(log n + k)</em> instead of
+            recursing through subtrees. Deleted/merged pages are returned to a free list and
+            recycled by future allocations instead of leaking disk space.
+          </p>
+        </section>
+
+        <section id="architecture" class="scroll-mt-32">
+          <h2 class="text-2xl font-semibold mb-4 text-white">Architecture</h2>
+          <div class="rounded-xl border border-neutral-800 bg-neutral-900 p-4 overflow-x-auto mb-4">
+            <pre class="mermaid">
+flowchart TB
+    subgraph guiL["btreedb.gui"]
+        GUI["Workbench: object browser + query editor + results grid"]
+    end
+    subgraph cliL["btreedb.cli"]
+        CLI["insert / get / delete / range / scan / stats / import / export"]
+    end
+    subgraph treeL["btreedb.btree.BTree"]
+        API["insert / get / delete / range_query / begin / commit / rollback"]
+        ALGO["_split_child / _fill / _borrow_* / _merge / _find_leaf"]
+        IDX["create_index / find_by_value"]
+    end
+    subgraph nodeL["btreedb.node"]
+        NODE["BTreeNode: keys, values (leaf) / children (internal), next_leaf"]
+        SER["to_bytes() / from_bytes()"]
+    end
+    subgraph pagerL["btreedb.pager.Pager"]
+        HEADER["Header page: root ptr, free list, degree"]
+        CACHE["LRU buffer pool (read_page/write_page)"]
+        TXN["begin_transaction / commit_transaction / rollback_transaction"]
+    end
+    subgraph walL["btreedb.wal.WriteAheadLog"]
+        WAL["append_page / append_commit / recover()"]
+    end
+    FILE[("Single .db file on disk")]
+    WALFILE[(".db.wal sidecar file")]
+
+    GUI --> API
+    CLI --> API --> ALGO --> NODE --> SER --> CACHE
+    API --> IDX --> API
+    API --> TXN --> WAL --> WALFILE
+    TXN --> CACHE --> FILE
+    ALGO --> HEADER --> FILE
+            </pre>
+          </div>
+          <div class="overflow-x-auto rounded-xl border border-neutral-800">
+            <table class="w-full text-left text-sm">
+              <thead class="bg-neutral-900 text-neutral-400">
+                <tr><th class="px-4 py-2">Layer</th><th class="px-4 py-2">File</th><th class="px-4 py-2">Responsibility</th></tr>
+              </thead>
+              <tbody class="divide-y divide-neutral-800 text-neutral-300">
+                <tr><td class="px-4 py-2 font-medium">Storage</td><td class="px-4 py-2 font-mono text-xs">pager.py</td><td class="px-4 py-2">Fixed-size page file, header (magic/root/free-list), LRU buffer pool, transaction begin/commit/rollback.</td></tr>
+                <tr><td class="px-4 py-2 font-medium">Durability</td><td class="px-4 py-2 font-mono text-xs">wal.py</td><td class="px-4 py-2">Write-ahead log: redo-only page-image records + crash recovery on open.</td></tr>
+                <tr><td class="px-4 py-2 font-medium">Serialization</td><td class="px-4 py-2 font-mono text-xs">node.py</td><td class="px-4 py-2">Packs/unpacks a BTreeNode into one page via struct; leaves store values + next_leaf, internal nodes store only routing keys + children.</td></tr>
+                <tr><td class="px-4 py-2 font-medium">Algorithms</td><td class="px-4 py-2 font-mono text-xs">btree.py</td><td class="px-4 py-2">B+-tree search/insert/delete, leaf-chain range scans, transactions, stats.</td></tr>
+                <tr><td class="px-4 py-2 font-medium">Secondary index</td><td class="px-4 py-2 font-mono text-xs">index.py</td><td class="px-4 py-2">A value-keyed B+-tree kept in sync with the primary tree.</td></tr>
+                <tr><td class="px-4 py-2 font-medium">SQL subset</td><td class="px-4 py-2 font-mono text-xs">sql.py</td><td class="px-4 py-2">Regex-based parser mapping SQL statements onto the BTree API.</td></tr>
+                <tr><td class="px-4 py-2 font-medium">Interfaces</td><td class="px-4 py-2 font-mono text-xs">cli.py / gui.py</td><td class="px-4 py-2">argparse CLI and Tkinter "Workbench" desktop UI over the library.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="pagelayout" class="scroll-mt-32">
+          <h2 class="text-2xl font-semibold mb-4 text-white">On-Disk Page Layout</h2>
+          <p class="text-neutral-300 leading-relaxed mb-4">
+            Each page is a fixed size (default 8 KiB). Page 0 is a header page (written directly,
+            fsynced immediately, never cached/WAL'd); every other page holds one BTreeNode. Leaf and
+            internal nodes share the exact same physical layout/capacity for simplicity — a leaf's
+            unused "children" region is repurposed to hold its <code>next_leaf</code> pointer, and an
+            internal node's "values" region is simply left unused.
+          </p>
+          <div class="rounded-xl border border-neutral-800 bg-neutral-900 p-4 overflow-x-auto">
+<pre class="text-xs text-neutral-300 leading-relaxed"><code>[ leaf flag: 1B ][ num_keys: 2B ]
+[ key slots:   num_keys x (len: 2B + data: max_key_size) ]
+[ if leaf:   value slots: num_keys x (len: 2B + data: max_value_size) ]
+[ if leaf:   next_leaf page pointer: 4B (repurposes the unused child-ptr region) ]
+[ if internal: child ptrs: (num_keys + 1) x page number (4B) ]</code></pre>
+          </div>
+        </section>
+
+        <section id="complexity" class="scroll-mt-32">
+          <h2 class="text-2xl font-semibold mb-4 text-white">Complexity</h2>
+          <div class="overflow-x-auto rounded-xl border border-neutral-800">
+            <table class="w-full text-left text-sm">
+              <thead class="bg-neutral-900 text-neutral-400">
+                <tr><th class="px-4 py-2">Operation</th><th class="px-4 py-2">Time</th><th class="px-4 py-2">Notes</th></tr>
+              </thead>
+              <tbody class="divide-y divide-neutral-800 text-neutral-300">
+                <tr><td class="px-4 py-2 font-medium">get / insert / delete</td><td class="px-4 py-2">O(log<sub>t</sub> n)</td><td class="px-4 py-2">t = degree, typically 10s–100s, so height stays 2–4 for millions of keys.</td></tr>
+                <tr><td class="px-4 py-2 font-medium">range_query(a, b)</td><td class="px-4 py-2">O(log<sub>t</sub> n + k)</td><td class="px-4 py-2">k = number of results returned.</td></tr>
+                <tr><td class="px-4 py-2 font-medium">Full scan / len()</td><td class="px-4 py-2">O(n)</td><td class="px-4 py-2">Walks every node.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="wal" class="scroll-mt-32">
+          <h2 class="text-2xl font-semibold mb-4 text-white">Write-Ahead Log &amp; Transactions</h2>
+          <p class="text-neutral-300 leading-relaxed mb-4">
+            Every transaction's dirty pages are logged and fsynced before being applied to the main
+            file (redo-only, "no steal"); a crash between the WAL fsync and the checkpoint is
+            repaired on the next open by replaying committed transactions. Every top-level
+            insert/delete is automatically wrapped in its own durable, atomic transaction
+            (autocommit), or grouped explicitly via <code>BEGIN</code>/<code>COMMIT</code>/<code>ROLLBACK</code>.
+          </p>
+          <div class="overflow-x-auto rounded-xl border border-neutral-800">
+            <table class="w-full text-left text-sm">
+              <thead class="bg-neutral-900 text-neutral-400">
+                <tr>
+                  <th class="px-4 py-2">Feature</th>
+                  <th class="px-4 py-2">Details</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-neutral-800 text-neutral-300">
+                <tr><td class="px-4 py-2 font-medium">Buffer pool</td><td class="px-4 py-2">LRU page cache; never writes a page dirtied by an uncommitted transaction ahead of its WAL record.</td></tr>
+                <tr><td class="px-4 py-2 font-medium">Secondary indexes</td><td class="px-4 py-2">A second on-disk B+-tree keyed by value, kept in sync automatically — O(log n + k) lookups instead of a full scan.</td></tr>
+                <tr><td class="px-4 py-2 font-medium">Range queries</td><td class="px-4 py-2">Backed by the leaf linked list, no subtree recursion needed for bounded ranges.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="sql" class="scroll-mt-32">
+          <h2 class="text-2xl font-semibold mb-4 text-white">SQL Subset, CLI &amp; GUI</h2>
+          <p class="text-neutral-300 leading-relaxed">
+            A minimal SQL subset (<code>SELECT</code>/<code>INSERT</code>/<code>UPDATE</code>/<code>DELETE</code>/
+            <code>CREATE INDEX</code>/<code>BEGIN</code>/<code>COMMIT</code>/<code>ROLLBACK</code>) maps directly onto
+            the KV engine, usable from the CLI or a Tkinter desktop "Workbench" GUI — an
+            object browser with live tree stats, a query editor, and an editable results grid,
+            styled after tools like pgAdmin/DBeaver. Zero extra dependencies; Tkinter ships with Python.
+          </p>
+          <div class="rounded-xl border border-neutral-800 bg-neutral-900 p-4 overflow-x-auto mt-4">
+<pre class="text-xs text-neutral-300 leading-relaxed"><code>python -m btreedb mydb.db insert user:1 '{"name": "Ada"}'
+python -m btreedb mydb.db get user:1
+python -m btreedb mydb.db range user: user:z
+python -m btreedb mydb.db stats
+python -m btreedb mydb.db sql "SELECT * FROM t WHERE key='user:1'"
+python -m btreedb mydb.db gui</code></pre>
+          </div>
+        </section>
+
+        <section id="testing" class="scroll-mt-32">
+          <h2 class="text-xl font-semibold mb-2 text-white">Testing &amp; Benchmarks</h2>
+          <p class="text-neutral-300">
+            47 unit tests cover crash recovery (a dedicated WAL crash-recovery suite), transactions,
+            indexes, and persistence across reopen. A benchmark script compares insert/lookup/scan
+            throughput against <code>sqlite3</code> and a plain Python <code>dict</code> to put the
+            engine's performance in context.
+          </p>
+        </section>
+
+        <section id="limitations" class="scroll-mt-32 border-l-2 border-neutral-700 pl-6">
+          <h2 class="text-xl font-semibold mb-2 text-white">Design Tradeoffs &amp; Future Work</h2>
+          <ul class="list-disc list-inside space-y-2 text-neutral-300">
+            <li>Fixed key/value byte lengths per database file trade flexibility for a simpler, predictable on-disk layout.</li>
+            <li>The header page is written directly (not WAL'd) since it changes rarely and predictably — a deliberate simplification documented alongside the WAL design.</li>
+            <li>The SQL subset is a regex-based mapper onto the KV engine, not a full relational query planner — by design, to keep the storage engine the focus.</li>
+            <li>No built-in replication/clustering — this project is a single-node embedded engine (see RaftKV for the distributed-systems counterpart).</li>
+          </ul>
+        </section>
+
+      </div>
+
+      <aside class="hidden lg:block lg:col-span-4">
+        <div class="sticky top-28 space-y-8">
+            <div class="rounded-2xl border border-neutral-800 bg-neutral-900/50 p-6 backdrop-blur-sm">
+                <h3 class="mb-4 text-sm font-semibold uppercase tracking-wider text-neutral-500">Table of Contents</h3>
+                <nav class="space-y-2 text-sm" aria-label="Table of contents">
+                    <a href="#overview" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Overview</a>
+                    <a href="#storage" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Storage Engine</a>
+                    <a href="#architecture" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Architecture</a>
+                    <a href="#pagelayout" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">On-Disk Page Layout</a>
+                    <a href="#complexity" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Complexity</a>
+                    <a href="#wal" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">WAL &amp; Transactions</a>
+                    <a href="#sql" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">SQL, CLI &amp; GUI</a>
+                    <a href="#testing" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Testing &amp; Benchmarks</a>
+                    <a href="#limitations" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Design Tradeoffs</a>
+                </nav>
+            </div>
+
+            <div class="rounded-2xl border border-neutral-800 bg-neutral-900/50 p-6">
+                <h3 class="mb-2 text-sm font-semibold text-white">Interested in this project?</h3>
+                <p class="mb-4 text-xs text-neutral-400">Check out the code on GitHub or contact me for a walkthrough.</p>
+                <a href="https://github.com/vishal-h-dev" class="block w-full rounded-lg bg-white px-4 py-2 text-center text-sm font-bold text-black hover:bg-neutral-200 transition">
+                    View on GitHub
+                </a>
+            </div>
+        </div>
+      </aside>
+
+    </div>
+
+  </main>
+
+  <footer class="border-t border-neutral-900 bg-black py-8 text-sm text-neutral-500">
+    <div class="mx-auto max-w-5xl px-4 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="text-center md:text-left">
+        <p>© <span id="year"></span> Vishal Hegde. All rights reserved.</p>
+      </div>
+      <div class="flex gap-4">
+        <a href="index.html" class="hover:text-white transition">Home</a>
+        <a href="index.html#projects" class="hover:text-white transition">Projects</a>
+        <a href="mailto:hegdevishals75@gmail.com" class="hover:text-white transition">Contact</a>
+      </div>
+    </div>
+    <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+  </footer>
+
+</body>
+</html>
