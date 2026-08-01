@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sentinel — Static Security Scanner — Vishal Hegde</title>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PFP9SLNDZ5"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-PFP9SLNDZ5');
+  </script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body {
+      background: #000;
+      color: #f9fafb;
+      min-height: 100vh;
+    }
+  </style>
+  <link rel="stylesheet" href="static/theme.css">
+</head>
+<body class="antialiased selection:bg-white/20">
+
+  <header class="fixed top-0 inset-x-0 z-50">
+    <div class="mx-auto max-w-5xl px-4">
+      <div class="mt-3 mb-2 flex items-center justify-between rounded-2xl border border-white/10 bg-black/50 px-4 py-3 backdrop-blur-md">
+        <a href="index.html" class="flex items-center gap-2 group">
+          <div class="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-sm font-semibold group-hover:bg-white/20 transition">
+            VH
+          </div>
+          <span class="text-sm font-medium sm:text-base group-hover:text-white transition">Vishal Hegde</span>
+        </a>
+
+        <nav class="hidden gap-6 text-sm text-neutral-200 md:flex" aria-label="Primary">
+          <a href="index.html" class="hover:text-white transition">Home</a>
+          <a href="index.html#skills" class="hover:text-white transition">Skills</a>
+          <a href="index.html#projects" class="text-white font-medium">Projects</a>
+          <a href="index.html#experience" class="hover:text-white transition">Experience</a>
+          <a href="index.html#connect" class="hover:text-white transition">Connect</a>
+        </nav>
+
+        <button class="md:hidden p-1 text-neutral-200" aria-label="Menu">
+          <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M4 12h16M4 17h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-6xl px-4 pt-32 pb-16 text-white">
+
+    <section class="mb-12 border-b border-neutral-800 pb-8">
+      <div class="mb-4">
+        <span class="rounded-full border border-neutral-700 bg-neutral-900 px-3 py-1 text-xs text-neutral-400">Application Security</span>
+      </div>
+      <h1 class="gradient-heading text-3xl font-bold sm:text-5xl mb-4">Sentinel — Static Security Scanner for Python/Django &amp; AI Apps</h1>
+      <p class="max-w-3xl text-lg text-neutral-400 leading-relaxed">
+        A self-contained static analysis engine that points at a codebase and reports likely
+        vulnerabilities: hardcoded secrets, injection sinks, insecure Django settings, missing
+        authorization, and — the novel part — AI/LLM-specific risks like prompt injection and agent
+        SSRF. Everything runs locally with only the Python standard library: no network calls, no
+        API keys, no external services.
+      </p>
+
+      <div class="mt-6 flex flex-wrap gap-2 text-xs text-neutral-300">
+        <span class="rounded bg-neutral-800 px-2 py-1">Python (stdlib)</span>
+        <span class="rounded bg-neutral-800 px-2 py-1">AST Analysis</span>
+        <span class="rounded bg-neutral-800 px-2 py-1">Interprocedural Taint Tracking</span>
+        <span class="rounded bg-neutral-800 px-2 py-1">Secret Scanning</span>
+        <span class="rounded bg-neutral-800 px-2 py-1">AI/LLM Risk Rules</span>
+        <span class="rounded bg-neutral-800 px-2 py-1">JSON / PDF Reports</span>
+        <span class="rounded bg-neutral-800 px-2 py-1">46 Tests</span>
+      </div>
+    </section>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+
+      <div class="lg:col-span-8 space-y-16">
+
+        <section id="overview" class="scroll-mt-32">
+          <h2 class="text-2xl font-semibold mb-4 text-white">Overview</h2>
+          <p class="text-neutral-300 leading-relaxed">
+            Modern applications — especially those assembled quickly with AI coding assistance —
+            tend to accumulate the same classes of security bugs over and over. Sentinel reads
+            source code, understands its structure (not just text), and flags dangerous patterns
+            with an explanation and a suggested fix. It works like professional tools such as
+            <code>bandit</code>, <code>semgrep</code>, and <code>snyk</code>, at a scale small enough
+            to read and understand end to end.
+          </p>
+        </section>
+
+        <section id="pipeline" class="scroll-mt-32">
+          <h2 class="text-2xl font-semibold mb-4 text-white">How It Works</h2>
+          <ol class="list-decimal list-inside space-y-2 text-neutral-300">
+            <li><strong>Walk</strong> the project, reading every text/Python file.</li>
+            <li><strong>Parse</strong> each Python file into an Abstract Syntax Tree (AST) — a structured map of the code.</li>
+            <li><strong>Visit</strong> the tree once, matching dangerous structural patterns (e.g. an f-string built from request input passed to a raw SQL cursor → SQL injection).</li>
+            <li><strong>Scan</strong> raw text for known secret formats (cloud/API keys, private keys, JWTs) and high-entropy strings.</li>
+            <li><strong>Report</strong> findings sorted by severity, each with a CWE id and remediation guidance.</li>
+          </ol>
+        </section>
+
+        <section id="taint" class="scroll-mt-32">
+          <h2 class="text-2xl font-semibold mb-4 text-white">Interprocedural Taint Engine</h2>
+          <p class="text-neutral-300 leading-relaxed">
+            Beyond single-function pattern matching, Sentinel includes a summary-based taint
+            analysis that tracks untrusted data as it flows <em>across function and file
+            boundaries</em> via a fixpoint over the call graph — so it can catch, for example, user
+            input that passes through two helper functions in different modules before reaching a
+            dangerous sink. Each finding carries the full data-flow path (file/line/description at
+            every hop) instead of just the final line.
+          </p>
+        </section>
+
+        <section id="rules" class="scroll-mt-32">
+          <h2 class="text-2xl font-semibold mb-4 text-white">Full Rule Coverage</h2>
+          <div class="overflow-x-auto rounded-xl border border-neutral-800">
+            <table class="w-full text-left text-sm">
+              <thead class="bg-neutral-900 text-neutral-400">
+                <tr><th class="px-4 py-2">ID</th><th class="px-4 py-2">Issue</th><th class="px-4 py-2">CWE</th></tr>
+              </thead>
+              <tbody class="divide-y divide-neutral-800 text-neutral-300">
+                <tr><td class="px-4 py-2 font-mono text-xs">SEC001</td><td class="px-4 py-2">Hardcoded secret / credential</td><td class="px-4 py-2">CWE-798</td></tr>
+                <tr><td class="px-4 py-2 font-mono text-xs">SEC002</td><td class="px-4 py-2">DEBUG = True</td><td class="px-4 py-2">CWE-489</td></tr>
+                <tr><td class="px-4 py-2 font-mono text-xs">SEC003</td><td class="px-4 py-2">Wildcard ALLOWED_HOSTS</td><td class="px-4 py-2">CWE-16</td></tr>
+                <tr><td class="px-4 py-2 font-mono text-xs">SEC004</td><td class="px-4 py-2">Hardcoded SECRET_KEY</td><td class="px-4 py-2">CWE-798</td></tr>
+                <tr><td class="px-4 py-2 font-mono text-xs">SEC005</td><td class="px-4 py-2">CORS allows all origins</td><td class="px-4 py-2">CWE-942</td></tr>
+                <tr><td class="px-4 py-2 font-mono text-xs">SEC006</td><td class="px-4 py-2">Known secret pattern (AWS/Google/Slack/JWT/...)</td><td class="px-4 py-2">CWE-798</td></tr>
+                <tr><td class="px-4 py-2 font-mono text-xs">CFG001</td><td class="px-4 py-2">Insecure cookie / transport flags</td><td class="px-4 py-2">CWE-614</td></tr>
+                <tr><td class="px-4 py-2 font-mono text-xs">INJ001</td><td class="px-4 py-2">eval() / exec()</td><td class="px-4 py-2">CWE-95</td></tr>
+                <tr><td class="px-4 py-2 font-mono text-xs">INJ002</td><td class="px-4 py-2">os.system / os.popen</td><td class="px-4 py-2">CWE-78</td></tr>
+                <tr><td class="px-4 py-2 font-mono text-xs">INJ003</td><td class="px-4 py-2">subprocess(..., shell=True)</td><td class="px-4 py-2">CWE-78</td></tr>
+                <tr><td class="px-4 py-2 font-mono text-xs">INJ004</td><td class="px-4 py-2">SQL built from a dynamic string</td><td class="px-4 py-2">CWE-89</td></tr>
+                <tr><td class="px-4 py-2 font-mono text-xs">DES001</td><td class="px-4 py-2">Unsafe deserialization (pickle, yaml.load)</td><td class="px-4 py-2">CWE-502</td></tr>
+                <tr><td class="px-4 py-2 font-mono text-xs">XSS001</td><td class="px-4 py-2">mark_safe() on dynamic HTML</td><td class="px-4 py-2">CWE-79</td></tr>
+                <tr><td class="px-4 py-2 font-mono text-xs">CSRF001</td><td class="px-4 py-2">@csrf_exempt</td><td class="px-4 py-2">CWE-352</td></tr>
+                <tr><td class="px-4 py-2 font-mono text-xs">AUTH001</td><td class="px-4 py-2">Endpoint exposed without authorization</td><td class="px-4 py-2">CWE-862</td></tr>
+                <tr><td class="px-4 py-2 font-mono text-xs">AUTH002</td><td class="px-4 py-2">Unauthenticated AI/state-changing endpoint</td><td class="px-4 py-2">CWE-862</td></tr>
+                <tr><td class="px-4 py-2 font-mono text-xs">RATE001</td><td class="px-4 py-2">LLM endpoint without rate limiting (denial-of-wallet)</td><td class="px-4 py-2">CWE-770</td></tr>
+                <tr><td class="px-4 py-2 font-mono text-xs">CRY001</td><td class="px-4 py-2">Weak hash (MD5/SHA1)</td><td class="px-4 py-2">CWE-327</td></tr>
+                <tr><td class="px-4 py-2 font-mono text-xs">CRY002</td><td class="px-4 py-2">Insecure randomness for a secret</td><td class="px-4 py-2">CWE-330</td></tr>
+                <tr><td class="px-4 py-2 font-mono text-xs">SSRF001</td><td class="px-4 py-2">Request to a dynamic URL</td><td class="px-4 py-2">CWE-918</td></tr>
+                <tr class="bg-neutral-900/60"><td class="px-4 py-2 font-mono text-xs font-bold">AI001</td><td class="px-4 py-2 font-semibold">Prompt injection: user input in LLM prompt</td><td class="px-4 py-2">CWE-1427</td></tr>
+                <tr class="bg-neutral-900/60"><td class="px-4 py-2 font-mono text-xs font-bold">AI002</td><td class="px-4 py-2 font-semibold">LLM output flows into a dangerous sink</td><td class="px-4 py-2">CWE-95</td></tr>
+                <tr class="bg-neutral-900/60"><td class="px-4 py-2 font-mono text-xs font-bold">AI003</td><td class="px-4 py-2 font-semibold">Agent tool fetches a user-controlled URL (SSRF)</td><td class="px-4 py-2">CWE-918</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="research" class="scroll-mt-32">
+          <h2 class="text-2xl font-semibold mb-4 text-white">The Research Angle</h2>
+          <p class="text-neutral-300 leading-relaxed mb-4">
+            General-purpose SAST tools are mature, but AI-agent code introduces new vulnerability
+            classes that existing scanners largely ignore (mapped by the OWASP Top 10 for LLM
+            Applications). The <code>AI00x</code> rules are a first cut at detecting them
+            statically, built around a concrete taint-analysis model for LLM data flow:
+          </p>
+          <ul class="list-disc list-inside space-y-2 text-neutral-300">
+            <li>Treat <code>request.*</code> as a <em>source</em>, the LLM call as a <em>propagator</em> (user text → prompt → model output), and <code>eval/exec/subprocess/SQL</code> as <em>sinks</em>.</li>
+            <li>Detect dangerous source → LLM → sink chains automatically via the interprocedural taint engine.</li>
+            <li>Benchmark against a labelled set of vulnerable vs. safe AI-agent snippets, reporting precision/recall vs. <code>bandit</code>/<code>semgrep</code> (which lack AI-specific rules).</li>
+          </ul>
+        </section>
+
+        <section id="reporting" class="scroll-mt-32 border-l-2 border-neutral-700 pl-6">
+          <h2 class="text-xl font-semibold mb-2 text-white">Reporting &amp; Baseline Mode</h2>
+          <p class="text-neutral-300">
+            Findings can be exported as JSON (for CI pipelines/dashboards) or a detailed PDF report
+            (rendered with the standard library only). A baseline mode fingerprints existing
+            findings (line-insensitive, so formatting changes don't create noise) so a project can
+            adopt the scanner incrementally and only fail CI on <em>new</em> issues.
+          </p>
+        </section>
+
+        <section id="limitations" class="scroll-mt-32">
+          <h2 class="text-xl font-semibold mb-2 text-white">Honest Limitations</h2>
+          <ul class="list-disc list-inside space-y-2 text-neutral-300">
+            <li>This is a <strong>static</strong> scanner — it reasons about code without running it, so it produces some false positives and cannot catch every bug. Findings are leads to review, not proof.</li>
+            <li>Single-statement taint heuristics are backed by a real interprocedural engine for the sink rules it owns, but not every rule uses full data-flow analysis.</li>
+            <li>"No findings" never means "secure" — it means none of the implemented patterns matched.</li>
+          </ul>
+        </section>
+
+      </div>
+
+      <aside class="hidden lg:block lg:col-span-4">
+        <div class="sticky top-28 space-y-8">
+            <div class="rounded-2xl border border-neutral-800 bg-neutral-900/50 p-6 backdrop-blur-sm">
+                <h3 class="mb-4 text-sm font-semibold uppercase tracking-wider text-neutral-500">Table of Contents</h3>
+                <nav class="space-y-2 text-sm" aria-label="Table of contents">
+                    <a href="#overview" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Overview</a>
+                    <a href="#pipeline" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">How It Works</a>
+                    <a href="#taint" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Interprocedural Taint Engine</a>
+                    <a href="#rules" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Full Rule Coverage</a>
+                    <a href="#research" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">The Research Angle</a>
+                    <a href="#reporting" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Reporting &amp; Baseline Mode</a>
+                    <a href="#limitations" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Honest Limitations</a>
+                </nav>
+            </div>
+
+            <div class="rounded-2xl border border-neutral-800 bg-neutral-900/50 p-6">
+                <h3 class="mb-2 text-sm font-semibold text-white">Interested in this project?</h3>
+                <p class="mb-4 text-xs text-neutral-400">Check out the code on GitHub or contact me for a walkthrough.</p>
+                <a href="https://github.com/vishal-h-dev" class="block w-full rounded-lg bg-white px-4 py-2 text-center text-sm font-bold text-black hover:bg-neutral-200 transition">
+                    View on GitHub
+                </a>
+            </div>
+        </div>
+      </aside>
+
+    </div>
+
+  </main>
+
+  <footer class="border-t border-neutral-900 bg-black py-8 text-sm text-neutral-500">
+    <div class="mx-auto max-w-5xl px-4 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="text-center md:text-left">
+        <p>© <span id="year"></span> Vishal Hegde. All rights reserved.</p>
+      </div>
+      <div class="flex gap-4">
+        <a href="index.html" class="hover:text-white transition">Home</a>
+        <a href="index.html#projects" class="hover:text-white transition">Projects</a>
+        <a href="mailto:hegdevishals75@gmail.com" class="hover:text-white transition">Contact</a>
+      </div>
+    </div>
+    <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+  </footer>
+
+</body>
+</html>
