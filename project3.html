@@ -5,6 +5,15 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Online Electronics Store — Vishal Hegde</title>
 
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PFP9SLNDZ5"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-PFP9SLNDZ5');
+  </script>
+
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
@@ -14,6 +23,7 @@
       min-height: 100vh;
     }
   </style>
+  <link rel="stylesheet" href="static/theme.css">
 </head>
 <body class="antialiased selection:bg-white/20">
 
@@ -27,7 +37,7 @@
           <span class="text-sm font-medium sm:text-base group-hover:text-white transition">Vishal Hegde</span>
         </a>
 
-        <nav class="hidden gap-6 text-sm text-neutral-200 md:flex">
+        <nav class="hidden gap-6 text-sm text-neutral-200 md:flex" aria-label="Primary">
           <a href="index.html" class="hover:text-white transition">Home</a>
           <a href="index.html#projects" class="text-white font-medium">Projects</a>
           <a href="index.html#connect" class="hover:text-white transition">Connect</a>
@@ -48,7 +58,7 @@
       <div class="mb-4">
         <span class="rounded-full border border-neutral-700 bg-neutral-900 px-3 py-1 text-xs text-neutral-400">E-Commerce Platform</span>
       </div>
-      <h1 class="text-3xl font-bold sm:text-5xl mb-4">Online Electronics Store</h1>
+      <h1 class="gradient-heading text-3xl font-bold sm:text-5xl mb-4">Online Electronics Store</h1>
       <p class="max-w-3xl text-lg text-neutral-400 leading-relaxed">
         A full-stack e-commerce solution featuring Google OAuth, secure Razorpay payments, and a complete shopping workflow from cart to order history.
       </p>
@@ -56,7 +66,7 @@
           DEPLOYMENT
         </h3>
         <div class="mb-4 flex flex-wrap gap-2 text-xs">
-         <a style="color:#1a73e8; text-decoration: underline;" href="https://online-e-commerce-application-with.onrender.com/">Online Electronics Store</a>
+         <a class="text-teal-300 underline hover:text-white transition" href="https://online-e-commerce-application-with.onrender.com/">Online Electronics Store</a>
         </div>
       
       <div class="mt-6 flex flex-wrap gap-2 text-xs text-neutral-300">
@@ -182,13 +192,23 @@
             </p>
         </section>
 
+        <section id="engineering" class="scroll-mt-32 border-l-2 border-neutral-700 pl-6">
+          <h2 class="text-xl font-semibold mb-2 text-white">Engineering Notes</h2>
+          <ul class="list-disc list-inside space-y-3 text-neutral-300">
+            <li><strong>Payment integrity:</strong> Razorpay payments are confirmed via signature verification on the returned payment data before an order is finalized, and order creation is treated as idempotent — so a retried webhook or a user refreshing the confirmation page can't create a duplicate paid order.</li>
+            <li><strong>Server-side pricing:</strong> Coupon discounts and totals are recalculated on the server at checkout rather than trusted from the client, so a tampered cart total in the browser can't be used to under-pay.</li>
+            <li><strong>OAuth account linking:</strong> Google OAuth sign-in is matched against existing accounts by verified email, so a user who originally registered with a password and later signs in with Google lands on the same account instead of creating a duplicate one.</li>
+            <li><strong>Stock consistency:</strong> Real-time stock status on the product page and cart is checked again at checkout time, so an item that sold out between browsing and paying is caught before payment rather than after.</li>
+          </ul>
+        </section>
+
       </div>
 
       <aside class="hidden lg:block lg:col-span-4">
         <div class="sticky top-28 space-y-8">
             <div class="rounded-2xl border border-neutral-800 bg-neutral-900/50 p-6 backdrop-blur-sm">
                 <h3 class="mb-4 text-sm font-semibold uppercase tracking-wider text-neutral-500">Table of Contents</h3>
-                <nav class="space-y-2 text-sm">
+                <nav class="space-y-2 text-sm" aria-label="Table of contents">
                     <a href="#overview" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Overview</a>
                     <a href="#login" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Login & OAuth</a>
                     <a href="#home" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Storefront</a>
@@ -199,6 +219,7 @@
                     <a href="#payment" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Razorpay</a>
                     <a href="#wishlist" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Wishlist</a>
                     <a href="#orders" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Order History</a>
+                    <a href="#engineering" class="block text-neutral-300 hover:text-white hover:translate-x-1 transition-all">Engineering Notes</a>
                 </nav>
             </div>
             
